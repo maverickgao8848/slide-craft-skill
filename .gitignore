@@ -1,0 +1,55 @@
+# Operating System
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# Editor / IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Node.js
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+package-lock.json
+yarn.lock
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+.venv/
+ENV/
+.env
+
+# Build outputs
+dist/
+build/
+output/
+
+# Generated files
+*.pdf
+extracted-slides.json
+assets/extracted/
+
+# Temporary files
+*.tmp
+*.temp
+.tmp/
+.temp/
+
+# Claude Code
+.claude-design/
