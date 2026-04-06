@@ -176,11 +176,13 @@ Copy-Item -Recurse -Force .\* "$env:USERPROFILE\.claude\skills\slidecraft\"
 #### 可选依赖
 
 **PPT 转换：**
+
 ```bash
 pip install -r requirements.txt
 ```
 
 **Vercel 部署：**
+
 ```bash
 npm install -g vercel
 vercel login
@@ -353,11 +355,13 @@ In Claude Code, type `/slidecraft` — you should see the skill activate.
 #### Optional Dependencies
 
 **For PPT conversion:**
+
 ```bash
 pip install -r requirements.txt
 ```
 
 **For Vercel deployment:**
+
 ```bash
 npm install -g vercel
 vercel login
@@ -392,5 +396,3 @@ This skill was born from the belief that:
 ## License / 许可证
 
 MIT — Use it, modify it, share it.
-#   s l i d e - c r a f t - s k i l l  
- 
