@@ -55,13 +55,20 @@ The design system of this project is derived from Zara Zhang's [frontend-slides]
 
 **风格组合公式**: `A类(主风格) + B类(维度增强) + C类(质感滤镜)` — 每个组合包包含完整的设计系统、配色方案、字体搭配和动画预设。
 
-<img width="2841" height="1597" alt="65928c234fe1c01af4c24746b9333251" src="https://github.com/user-attachments/assets/878e6608-338e-4031-a2d0-a2bd7827d051" />
-<img width="2806" height="1598" alt="52bfd681dc465b38df4ad44a00488229" src="https://github.com/user-attachments/assets/66fbd7e8-07c9-4c8e-ae3c-daf3bd3f83d0" />
+<img width="2819" height="1475" alt="image" src="https://github.com/user-attachments/assets/d7c6b649-28a4-42aa-b7a8-243f5e405dc5" />
+
+<img width="2794" height="1461" alt="image" src="https://github.com/user-attachments/assets/7e114749-ec7a-4fff-817d-cd46313772b9" />
+
 <img width="2819" height="1440" alt="ef896a5608013562a2fd66eca332deb6" src="https://github.com/user-attachments/assets/7fc4e14d-4a88-4921-9a3c-c8d4bde56302" />
+
 <img width="2706" height="1423" alt="5c5c1525046b53673bbcbd6044cc0dfe" src="https://github.com/user-attachments/assets/538a79fb-e68a-44bb-806d-8fb60bd1a127" />
+
 <img width="2781" height="1389" alt="f697850a84319446fe795404e942d2ec" src="https://github.com/user-attachments/assets/15e88540-7b05-4880-9030-d585dcd85be5" />
+
 <img width="2824" height="1499" alt="b6cca638a82d0ab30dc11bbf762ac843" src="https://github.com/user-attachments/assets/a49152a4-03ef-46fa-aea5-6a546d2f2d1c" />
+
 <img width="2746" height="1481" alt="69ef24783f13368c1991acf012150453" src="https://github.com/user-attachments/assets/d8f51c9f-a2a2-4056-b268-7e67f9ad647a" />
+
 <img width="2799" height="1516" alt="7b6d72610741ff1efa040f8a5beee6c2" src="https://github.com/user-attachments/assets/df734a93-e5a0-4cbf-8351-9cfc8ed4d019" />
 
 
