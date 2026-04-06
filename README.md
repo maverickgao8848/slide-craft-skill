@@ -392,3 +392,5 @@ This skill was born from the belief that:
 ## License / 许可证
 
 MIT — Use it, modify it, share it.
+#   s l i d e - c r a f t - s k i l l  
+ 
