@@ -157,8 +157,8 @@ bash scripts/export-pdf.sh ./presentation.html ./output.pdf
 
 ```bash
 # 克隆仓库
-git clone https://github.com/maverickgao8848/mav-slidecraft-skill.git
-cd slidecraft
+git clone https://github.com/maverickgao8848/slide-craft-skill.git
+cd slide-craft-skill
 
 # 安装到 Claude Code
 mkdir -p ~/.claude/skills/mav-slidecraft-skill
@@ -169,8 +169,8 @@ cp -r ./* ~/.claude/skills/mav-slidecraft-skill/
 
 ```powershell
 # 克隆仓库
-git clone https://github.com/maverickgao8848/mav-slidecraft-skill.git
-cd slidecraft
+git clone https://github.com/maverickgao8848/slide-craft-skill.git
+cd slide-craft-skill
 
 # 安装到 Claude Code
 New-Item -ItemType Directory -Force -Path "$env:USERPROFILE\.claude\skills\mav-slidecraft-skill"
@@ -343,8 +343,8 @@ Uses **progressive disclosure** — the main `SKILL.md` is a concise map (~250 l
 
 ```bash
 # Clone the repository
-git clone https://github.com/maverickgao8848/mav-slidecraft-skill.git
-cd slidecraft
+git clone https://github.com/maverickgao8848/slide-craft-skill.git
+cd slide-craft-skill
 
 # Install to Claude Code
 mkdir -p ~/.claude/skills/mav-slidecraft-skill
@@ -355,8 +355,8 @@ cp -r ./* ~/.claude/skills/mav-slidecraft-skill/
 
 ```powershell
 # Clone the repository
-git clone https://github.com/maverickgao8848/mav-slidecraft-skill.git
-cd slidecraft
+git clone https://github.com/maverickgao8848/slide-craft-skill.git
+cd slide-craft-skill
 
 # Install to Claude Code
 New-Item -ItemType Directory -Force -Path "$env:USERPROFILE\.claude\skills\mav-slidecraft-skill"
