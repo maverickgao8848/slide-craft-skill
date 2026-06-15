@@ -1,5 +1,7 @@
 # mav-slidecraft-skill
 
+<img width="2796" height="1500" alt="image" src="https://github.com/user-attachments/assets/28dde9a5-bca3-410d-9e6e-762dd103f533" />
+
 > **零依赖、动画丰富的 HTML 演示文稿生成器**
 > Zero-dependency, animation-rich HTML presentation generator
 
@@ -56,6 +58,38 @@ The design system of this project is derived from Zara Zhang's [frontend-slides]
 | 9 | 📰 **编辑杂志** Editorial Magazine | 大号衬线+强留白+出血大图+专栏网格 | 品牌故事、品牌发布会、设计作品集 |
 | 10 | 📚 **深色学院** Dark Academia | 深棕皮革+羊皮纸文字+烫金点缀 | 知识型演讲、历史文化、深度研究 |
 | 11 | 🍃 **侘寂科技** Wabi-Sabi Tech | 大量留白+和纸纹理+竖排装饰 | 人文关怀科技、可持续设计、东方美学 |
+
+
+
+<img width="2836" height="1536" alt="image" src="https://github.com/user-attachments/assets/0283a7a9-553f-4212-be11-c979f2ba33d6" />
+
+<img width="2800" height="1502" alt="image" src="https://github.com/user-attachments/assets/e9acbdf4-02a4-4af0-8c72-183b0248ee0a" />
+
+<img width="2806" height="1488" alt="image" src="https://github.com/user-attachments/assets/a45879da-8886-4b44-8856-5318acae11ba" />
+
+<img width="2804" height="1486" alt="image" src="https://github.com/user-attachments/assets/bc47fdcb-3a03-41a9-a992-c037f2495fc8" />
+
+<img width="2760" height="1470" alt="image" src="https://github.com/user-attachments/assets/90d0bfbf-16ef-4afb-9b47-a06e39ba2d1b" />
+
+<img width="2802" height="1502" alt="image" src="https://github.com/user-attachments/assets/60a82d86-86e4-42e9-aea5-3bc0ac831095" />
+
+<img width="2790" height="1456" alt="image" src="https://github.com/user-attachments/assets/c474fc95-e6a6-4183-81c8-db9cf9eb28c6" />
+
+<img width="2798" height="1510" alt="image" src="https://github.com/user-attachments/assets/7240f648-56d8-40ff-ae41-30b238c38ea3" />
+
+<img width="2780" height="1496" alt="image" src="https://github.com/user-attachments/assets/9890d879-2735-4134-b3f4-e25ec3effead" />
+
+<img width="2776" height="1446" alt="image" src="https://github.com/user-attachments/assets/5643a65d-b786-48a5-af9c-0964dd3a6fe0" />
+
+<img width="2758" height="1460" alt="image" src="https://github.com/user-attachments/assets/a5f7143d-6600-4d81-9b1f-68ab27ee895e" />
+
+
+
+
+
+
+
+
 
 **风格组合公式**: `A类(主风格) + B类(维度增强) + C类(质感滤镜)` — 每个组合包包含完整的设计系统、配色方案、字体搭配、动画预设和真实扫描纹理。
 
