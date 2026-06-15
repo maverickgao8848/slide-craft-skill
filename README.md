@@ -1,4 +1,4 @@
-# SlideCraft
+# mav-slidecraft-skill
 
 > **零依赖、动画丰富的 HTML 演示文稿生成器**
 > Zero-dependency, animation-rich HTML presentation generator
@@ -13,8 +13,9 @@
 
 The design system of this project is derived from Zara Zhang's [frontend-slides](https://github.com/zarazhangrui/frontend-slides), with significant enhancements including:
 
-- **8 种精心设计的风格组合** — 采用 A+B+C 组合公式（主风格 + 维度增强 + 质感滤镜）
-- **40 种微交互机制（Delight Library）** — 每种风格 5 个专属机制
+- **11 种精心设计的风格组合** — 采用 A+B+C 组合公式（主风格 + 维度增强 + 质感滤镜）
+- **40 种微交互机制（Delight Library）** — 每种风格 3–5 个专属机制
+- **真实扫描纹理系统** — 内联 PNG data-uri，替代 SVG 噪点
 - **完善的 6 阶段工作流程** — 内容发现 → 风格选择 → 预览确认 → 生成 → 交付 → 分享
 - **内容自适应系统** — `fitSlideContent()` 防止内容溢出
 - **中文支持** — 完整的中文界面和文档
@@ -27,7 +28,7 @@ The design system of this project is derived from Zara Zhang's [frontend-slides]
 
 ### 这是什么？
 
-**SlideCraft** 是一个 Claude Code skill，帮助你创建零依赖、动画丰富的 HTML 演示文稿。你不需要懂 CSS 或 JavaScript，只需要告诉 Claude 你想要什么内容，它会帮你生成精美的网页演示。
+**mav-slidecraft-skill** 是一个 Claude Code skill，帮助你创建零依赖、动画丰富的 HTML 演示文稿。你不需要懂 CSS 或 JavaScript，只需要告诉 Claude 你想要什么内容，它会帮你生成精美的网页演示。
 
 ### 核心特色
 
@@ -40,20 +41,23 @@ The design system of this project is derived from Zara Zhang's [frontend-slides]
 | **微交互系统** | 40 种精心设计的微交互机制，让演示"活起来" |
 | **生产级质量** | 可访问、响应式、代码注释完善，可自由定制 |
 
-### 8 种风格组合
+### 11 种风格组合
 
 | 序号 | 风格组合 | 核心气质 | 适用场景 |
 |------|----------|----------|----------|
-| 1 | 🧱 **数字粗野建筑** Neo-Brutalism + 3D | 粗犷几何+立体深度 | 创意机构、Web3、科技初创 |
-| 2 | 🚀 **80年代未来** Retro-Futurism | 霓虹渐变+复古科技感 | 科技发布会、游戏、音乐娱乐 |
-| 3 | 🎭 **极繁实验** Maximalism + Typography | 大胆混搭+实验字体 | 创意机构、音乐艺术、时尚品牌 |
-| 4 | 🖍️ **天真实验** Naive + Typography | 手绘质感+playful字体 | 教育、儿童产品、手工品牌 |
-| 5 | 💎 **高端SaaS** Bento + 3D + Glass | 卡片布局+精致质感 | SaaS产品、数据仪表板、产品展示 |
-| 6 | ☁️ **新极简温暖** Neo-Minimalism | 克制留白+温暖细节 | 高端品牌、奢侈品、科技公司 |
-| 7 | 🎉 **孟菲斯派对** Memphis | 几何图形+明快撞色 | 创业公司、潮流品牌、教育产品 |
-| 8 | 📐 **蓝图设计** Blueprint | 精确线条+技术美学 | 建筑/工程、技术分享、产品设计 |
+| 1 | 🧱 **数字粗野建筑** Neo-Brutalism + 3D | 粗犷几何+立体深度+混凝土纹理 | 创意机构、Web3、科技初创 |
+| 2 | 🚀 **80年代未来** Retro-Futurism | 霓虹渐变+复古科技感+CRT 点阵 | 科技发布会、游戏、音乐娱乐 |
+| 3 | 🎭 **极繁实验** Maximalism + Typography | 大胆混搭+编辑网格+拼贴纹理 | 创意机构、音乐艺术、时尚品牌 |
+| 4 | 🖍️ **天真实验** Naive + Typography | 手绘质感+Rough 风边框+贴纸拼贴 | 教育、儿童产品、手工品牌 |
+| 5 | 💎 **高端SaaS** Bento + 3D + Liquid Glass | 卡片布局+磨砂亚克力+三套行业色板 | SaaS产品、数据仪表板、产品展示 |
+| 6 | ☁️ **新极简温暖** Neo-Minimalism | 克制留白+真实颗粒+陶土粉点缀 | 高端品牌、奢侈品、科技公司 |
+| 7 | 🎉 **孟菲斯派对** Memphis | 真实孟菲斯色板+几何图案+层压板纹理 | 创业公司、潮流品牌、教育产品 |
+| 8 | 📐 **蓝图设计** Blueprint | 工程图纸+标注系统+等轴测投影 | 建筑/工程、技术分享、产品设计 |
+| 9 | 📰 **编辑杂志** Editorial Magazine | 大号衬线+强留白+出血大图+专栏网格 | 品牌故事、品牌发布会、设计作品集 |
+| 10 | 📚 **深色学院** Dark Academia | 深棕皮革+羊皮纸文字+烫金点缀 | 知识型演讲、历史文化、深度研究 |
+| 11 | 🍃 **侘寂科技** Wabi-Sabi Tech | 大量留白+和纸纹理+竖排装饰 | 人文关怀科技、可持续设计、东方美学 |
 
-**风格组合公式**: `A类(主风格) + B类(维度增强) + C类(质感滤镜)` — 每个组合包包含完整的设计系统、配色方案、字体搭配和动画预设。
+**风格组合公式**: `A类(主风格) + B类(维度增强) + C类(质感滤镜)` — 每个组合包包含完整的设计系统、配色方案、字体搭配、动画预设和真实扫描纹理。
 
 ### 微交互系统（Delight Library）
 
@@ -69,13 +73,16 @@ The design system of this project is derived from Zara Zhang's [frontend-slides]
 | 极繁实验 | 渐变流动、重叠字影、字符爆炸、描边填充、旋转标签 |
 | 天真实验 | 手绘入场、抖动悬停、贴纸弹跳、涂鸦光标、排版反抗 |
 | 高端SaaS | 模块抬升、玻璃光泽、网格重排、深度层叠、数据脉动 |
+| 编辑杂志 | 衬线揭示、留白呼吸、图片淡入、 hairline 延展、页码滚动 |
+| 深色学院 | 首字下沉、烫金闪烁、皮革颗粒、书页翻卷、墨迹晕染 |
+| 侘寂科技 | 竖排滑入、和纸纤维、陶土微动、墨渍扩散、间之呼吸 |
 
 ### 使用方法
 
 #### 创建新演示
 
 ```
-/slidecraft
+/mav-slidecraft-skill
 
 > "我想为我的 AI 创业公司做一个 Pitch Deck"
 ```
@@ -83,7 +90,7 @@ The design system of this project is derived from Zara Zhang's [frontend-slides]
 Skill 会：
 
 1. 询问内容（幻灯片数量、核心信息、图片）
-2. 展示 8 种风格组合供选择
+2. 展示 11 种风格组合供选择
 3. 生成 ASCII 预览确认内容
 4. 创建完整的演示文稿
 5. 在浏览器中打开
@@ -91,7 +98,7 @@ Skill 会：
 #### 转换 PowerPoint
 
 ```
-/slidecraft
+/mav-slidecraft-skill
 
 > "把我的 presentation.pptx 转换成网页"
 ```
@@ -131,7 +138,8 @@ bash scripts/export-pdf.sh ./presentation.html ./output.pdf
 | `references/viewport-base.css` | 必须包含的响应式 CSS | Phase 3（生成时） |
 | `html-template.md` | HTML 结构和 JS 功能 | Phase 3 |
 | `animation-patterns.md` | CSS/JS 动画参考 | Phase 3 |
-| `references/combo-*.md` | 8 个视觉风格组合 | Phase 2（风格选择） |
+| `references/combo-*.md` | 11 个视觉风格组合 | Phase 2（风格选择） |
+| `references/textures.css` | 真实扫描纹理 base64 | Phase 2 & 3 |
 | `references/delight-library/` | 40 个微交互模式 | Phase 2 & 3 |
 | `scripts/extract-pptx.py` | PPT 内容提取 | Phase 4（转换） |
 | `scripts/deploy.sh` | Vercel 部署 | Phase 6（分享） |
@@ -149,29 +157,29 @@ bash scripts/export-pdf.sh ./presentation.html ./output.pdf
 
 ```bash
 # 克隆仓库
-git clone https://github.com/maverickgao8848/slidecraft.git
+git clone https://github.com/maverickgao8848/mav-slidecraft-skill.git
 cd slidecraft
 
 # 安装到 Claude Code
-mkdir -p ~/.claude/skills/slidecraft
-cp -r ./* ~/.claude/skills/slidecraft/
+mkdir -p ~/.claude/skills/mav-slidecraft-skill
+cp -r ./* ~/.claude/skills/mav-slidecraft-skill/
 ```
 
 #### Windows (PowerShell)
 
 ```powershell
 # 克隆仓库
-git clone https://github.com/maverickgao8848/slidecraft.git
+git clone https://github.com/maverickgao8848/mav-slidecraft-skill.git
 cd slidecraft
 
 # 安装到 Claude Code
-New-Item -ItemType Directory -Force -Path "$env:USERPROFILE\.claude\skills\slidecraft"
-Copy-Item -Recurse -Force .\* "$env:USERPROFILE\.claude\skills\slidecraft\"
+New-Item -ItemType Directory -Force -Path "$env:USERPROFILE\.claude\skills\mav-slidecraft-skill"
+Copy-Item -Recurse -Force .\* "$env:USERPROFILE\.claude\skills\mav-slidecraft-skill\"
 ```
 
 #### 验证安装
 
-在 Claude Code 中输入 `/slidecraft`，应该看到 skill 激活。
+在 Claude Code 中输入 `/mav-slidecraft-skill`，应该看到 skill 激活。
 
 #### 可选依赖
 
@@ -206,7 +214,7 @@ vercel login
 
 ### What is this?
 
-**SlideCraft** is a Claude Code skill that helps you create zero-dependency, animation-rich HTML presentations. No CSS or JavaScript knowledge required — just tell Claude what content you want, and it generates beautiful web slides for you.
+**mav-slidecraft-skill** is a Claude Code skill that helps you create zero-dependency, animation-rich HTML presentations. No CSS or JavaScript knowledge required — just tell Claude what content you want, and it generates beautiful web slides for you.
 
 ### Key Features
 
@@ -219,20 +227,23 @@ vercel login
 | **Delight Library** | 40 carefully designed micro-interaction mechanisms to make presentations "alive". |
 | **Production Quality** | Accessible, responsive, well-commented code you can customize freely. |
 
-### 8 Style Combos
+### 11 Style Combos
 
 | # | Style Combo | Core Vibe | Best For |
 |---|-------------|-----------|----------|
-| 1 | 🧱 **Neo-Brutalism + 3D** | Bold geometry + depth | Creative agencies, Web3, tech startups |
-| 2 | 🚀 **Retro-Futurism** | Neon gradients + retro-tech | Tech launches, gaming, music/entertainment |
-| 3 | 🎭 **Maximalism + Typography** | Bold mix + experimental type | Creative agencies, music/art, fashion brands |
-| 4 | 🖍️ **Naive + Typography** | Hand-drawn feel + playful type | Education, kids' products, artisan brands |
-| 5 | 💎 **Bento + 3D + Glass** | Card layout + refined texture | SaaS products, dashboards, product showcases |
-| 6 | ☁️ **Neo-Minimalism** | Restrained whitespace + warm details | Premium brands, luxury, tech companies |
-| 7 | 🎉 **Memphis** | Geometric shapes + bold colors | Startups, trendy brands, educational products |
-| 8 | 📐 **Blueprint** | Precise lines + technical aesthetic | Architecture/engineering, tech talks, product design |
+| 1 | 🧱 **Neo-Brutalism + 3D** | Bold geometry + depth + concrete texture | Creative agencies, Web3, tech startups |
+| 2 | 🚀 **Retro-Futurism** | Neon gradients + retro-tech + CRT dot grid | Tech launches, gaming, music/entertainment |
+| 3 | 🎭 **Maximalism + Typography** | Bold mix + editorial grid + collage texture | Creative agencies, music/art, fashion brands |
+| 4 | 🖍️ **Naive + Typography** | Hand-drawn feel + Rough borders + stickers | Education, kids' products, artisan brands |
+| 5 | 💎 **Bento + 3D + Liquid Glass** | Card layout + frosted acrylic + 3 industry palettes | SaaS products, dashboards, product showcases |
+| 6 | ☁️ **Neo-Minimalism** | Restrained whitespace + real grain + terracotta accent | Premium brands, luxury, tech companies |
+| 7 | 🎉 **Memphis** | Authentic Memphis palette + geometry + laminate texture | Startups, trendy brands, educational products |
+| 8 | 📐 **Blueprint** | Engineering drawing + annotations + isometric projection | Architecture/engineering, tech talks, product design |
+| 9 | 📰 **Editorial Magazine** | Large serif + strong whitespace + bleeding images + column grid | Brand stories, launches, design portfolios |
+| 10 | 📚 **Dark Academia** | Dark leather + parchment text + gold foil | Knowledge talks, history/culture, deep research |
+| 11 | 🍃 **Wabi-Sabi Tech** | Generous whitespace + washi texture + vertical accents | Human-centered tech, sustainable design, Eastern aesthetics |
 
-**Combo Formula**: `Style A + Dimension B + Texture C` — each combo includes a complete design system, color palette, typography pairing, and animation presets.
+**Combo Formula**: `Style A + Dimension B + Texture C` — each combo includes a complete design system, color palette, typography pairing, animation presets, and real scanned textures.
 
 ### Delight Library (Micro-Interactions)
 
@@ -248,13 +259,16 @@ Each style combo comes with 5 unique micro-interaction mechanisms. When generati
 | Maximalism Typography | Gradient Flow Text, Overlapping Shadow, Character Explosion, Stroke Fill, Spinning Tags |
 | Naive Typography | Hand-drawn Enter, Wobble Hover, Sticker Bounce, Doodle Cursor, Layout Rebellion |
 | Bento 3D Glass | Module Lift, Glass Shine, Grid Shuffle, Depth Stack, Data Pulse |
+| Editorial Magazine | Serif Reveal, Whitespace Breathe, Image Fade, Hairline Extend, Page Number Scroll |
+| Dark Academia | Drop Cap Sink, Gold Foil Shimmer, Leather Grain, Page Curl, Ink Bleed |
+| Wabi-Sabi Tech | Vertical Slide, Washi Fiber, Clay Micro-motion, Ink Spread, Ma Breathing |
 
 ### Usage
 
 #### Create a New Presentation
 
 ```
-/slidecraft
+/mav-slidecraft-skill
 
 > "I want to create a pitch deck for my AI startup"
 ```
@@ -262,7 +276,7 @@ Each style combo comes with 5 unique micro-interaction mechanisms. When generati
 The skill will:
 
 1. Ask about your content (slides, messages, images)
-2. Show 8 style combos to choose from
+2. Show 11 style combos to choose from
 3. Generate ASCII preview for content confirmation
 4. Create the full presentation
 5. Open it in your browser
@@ -270,7 +284,7 @@ The skill will:
 #### Convert a PowerPoint
 
 ```
-/slidecraft
+/mav-slidecraft-skill
 
 > "Convert my presentation.pptx to a web slideshow"
 ```
@@ -310,7 +324,8 @@ Uses **progressive disclosure** — the main `SKILL.md` is a concise map (~250 l
 | `references/viewport-base.css` | Mandatory responsive CSS | Phase 3 (generation) |
 | `html-template.md` | HTML structure and JS features | Phase 3 |
 | `animation-patterns.md` | CSS/JS animation reference | Phase 3 |
-| `references/combo-*.md` | 8 visual style combinations | Phase 2 (style selection) |
+| `references/combo-*.md` | 11 visual style combinations | Phase 2 (style selection) |
+| `references/textures.css` | Real scanned texture base64 | Phase 2 & 3 |
 | `references/delight-library/` | 40 micro-interaction patterns | Phase 2 & 3 |
 | `scripts/extract-pptx.py` | PPT content extraction | Phase 4 (conversion) |
 | `scripts/deploy.sh` | Deploy to Vercel | Phase 6 (sharing) |
@@ -328,29 +343,29 @@ Uses **progressive disclosure** — the main `SKILL.md` is a concise map (~250 l
 
 ```bash
 # Clone the repository
-git clone https://github.com/maverickgao8848/slidecraft.git
+git clone https://github.com/maverickgao8848/mav-slidecraft-skill.git
 cd slidecraft
 
 # Install to Claude Code
-mkdir -p ~/.claude/skills/slidecraft
-cp -r ./* ~/.claude/skills/slidecraft/
+mkdir -p ~/.claude/skills/mav-slidecraft-skill
+cp -r ./* ~/.claude/skills/mav-slidecraft-skill/
 ```
 
 #### Windows (PowerShell)
 
 ```powershell
 # Clone the repository
-git clone https://github.com/maverickgao8848/slidecraft.git
+git clone https://github.com/maverickgao8848/mav-slidecraft-skill.git
 cd slidecraft
 
 # Install to Claude Code
-New-Item -ItemType Directory -Force -Path "$env:USERPROFILE\.claude\skills\slidecraft"
-Copy-Item -Recurse -Force .\* "$env:USERPROFILE\.claude\skills\slidecraft\"
+New-Item -ItemType Directory -Force -Path "$env:USERPROFILE\.claude\skills\mav-slidecraft-skill"
+Copy-Item -Recurse -Force .\* "$env:USERPROFILE\.claude\skills\mav-slidecraft-skill\"
 ```
 
 #### Verify Installation
 
-In Claude Code, type `/slidecraft` — you should see the skill activate.
+In Claude Code, type `/mav-slidecraft-skill` — you should see the skill activate.
 
 #### Optional Dependencies
 

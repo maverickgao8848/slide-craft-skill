@@ -1,0 +1,777 @@
+<!DOCTYPE html>
+<html lang="zh" data-deck="horizontal">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Demo — Guizang Magazine Deck</title>
+
+    <!-- Fonts -->
+    <link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=satoshi@400,500,700&display=swap">
+    <link href="https://fonts.googleapis.com/css2?family=Oranienbaum&family=Noto+Serif+SC:wght@400;700&family=Noto+Sans+SC:wght@400;500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+    <style>
+        /* ===========================================
+           THEME TOKENS
+           =========================================== */
+        :root {
+            --editorial-bg:        #F7F5F0;
+            --editorial-paper:     #FAF8F3;
+            --editorial-ink:       #1C1C1C;
+            --editorial-warm-gray: #8C8279;
+            --editorial-accent:    #9A3B3B;
+
+            --bg-primary:   var(--editorial-bg);
+            --bg-secondary: var(--editorial-paper);
+            --text-primary: var(--editorial-ink);
+            --text-secondary: var(--editorial-warm-gray);
+            --accent:       var(--editorial-accent);
+            --accent-on:    var(--editorial-paper);
+
+            --font-display: 'Oranienbaum', 'Noto Serif SC', serif;
+            --font-body:    'Satoshi', 'DM Sans', 'Noto Sans SC', sans-serif;
+            --font-mono:    'JetBrains Mono', monospace;
+
+            --h-hero-size: clamp(2.5rem, 10vw, 8rem);
+            --h-xl-size: clamp(2rem, 6vw, 5rem);
+            --h-sub-size: clamp(1.25rem, 2.5vw, 2rem);
+            --lead-size: clamp(1rem, 1.8vw, 1.5rem);
+            --body-size: clamp(0.875rem, 1.2vw, 1.125rem);
+            --meta-size: clamp(0.65rem, 0.9vw, 0.8rem);
+
+            --slide-padding: clamp(1.5rem, 4vw, 4rem);
+            --content-gap: clamp(1rem, 2vw, 2rem);
+            --section-gap: clamp(2rem, 5vh, 4rem);
+
+            --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+            --duration-fast: 0.2s;
+            --duration-normal: 0.5s;
+            --duration-slow: 0.7s;
+        }
+
+        /* ===========================================
+           BASE
+           =========================================== */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        html, body {
+            height: 100%;
+            overflow-x: hidden;
+        }
+
+        html { scroll-behavior: smooth; }
+        html[data-deck="horizontal"] { overflow: hidden; }
+        html[data-deck="horizontal"] body { overflow: hidden; }
+
+        body {
+            font-family: var(--font-body);
+            background: var(--editorial-bg);
+            color: var(--editorial-ink);
+        }
+
+        /* ===========================================
+           VIEWPORT BASE
+           =========================================== */
+        .slide {
+            width: 100vw;
+            height: 100vh;
+            height: 100dvh;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+
+        .slide-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            max-height: 100%;
+            min-height: 0;
+            overflow: hidden;
+            padding: var(--slide-padding);
+            position: relative;
+            z-index: 2;
+        }
+
+        .slide-content > * { flex-shrink: 1; min-height: 0; }
+
+        /* Horizontal deck */
+        html[data-deck="horizontal"] #deck {
+            position: fixed;
+            inset: 0;
+            display: flex;
+            flex-wrap: nowrap;
+            width: max-content;
+            height: 100vh;
+            transition: transform 0.9s cubic-bezier(0.77, 0, 0.175, 1);
+            z-index: 10;
+            will-change: transform;
+        }
+
+        html[data-deck="horizontal"] .slide {
+            width: 100vw;
+            height: 100vh;
+            flex: 0 0 100vw;
+        }
+
+        /* ===========================================
+           TYPOGRAPHY
+           =========================================== */
+        .h-hero {
+            font-family: var(--font-display);
+            font-size: var(--h-hero-size);
+            line-height: 0.95;
+            letter-spacing: -0.02em;
+            font-weight: 400;
+        }
+
+        .h-xl {
+            font-family: var(--font-display);
+            font-size: var(--h-xl-size);
+            line-height: 1.05;
+            font-weight: 400;
+        }
+
+        .h-sub {
+            font-family: var(--font-body);
+            font-size: var(--h-sub-size);
+            line-height: 1.25;
+            opacity: 0.75;
+        }
+
+        .lead {
+            font-family: var(--font-body);
+            font-size: var(--lead-size);
+            line-height: 1.5;
+        }
+
+        .body {
+            font-family: var(--font-body);
+            font-size: var(--body-size);
+            line-height: 1.65;
+        }
+
+        .kicker {
+            font-family: var(--font-mono);
+            font-size: var(--meta-size);
+            text-transform: uppercase;
+            letter-spacing: 0.25em;
+            opacity: 0.6;
+            margin-bottom: var(--content-gap);
+        }
+
+        .kicker::before {
+            content: "";
+            display: inline-block;
+            width: 24px;
+            height: 1px;
+            background: currentColor;
+            margin-right: 0.8em;
+            vertical-align: middle;
+        }
+
+        .meta-row {
+            display: flex;
+            gap: 0.6em;
+            align-items: center;
+            font-family: var(--font-mono);
+            font-size: var(--meta-size);
+            text-transform: uppercase;
+            letter-spacing: 0.14em;
+            opacity: 0.65;
+        }
+
+        .big-num {
+            font-family: var(--font-display);
+            font-size: clamp(3rem, 12vw, 10rem);
+            line-height: 0.85;
+            font-feature-settings: "tnum";
+            font-weight: 400;
+        }
+
+        .chrome {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            font-family: var(--font-mono);
+            font-size: var(--meta-size);
+            text-transform: uppercase;
+            letter-spacing: 0.16em;
+            opacity: 0.65;
+            margin-bottom: auto;
+            position: relative;
+            z-index: 2;
+            padding: var(--slide-padding) var(--slide-padding) 0;
+        }
+
+        .foot {
+            margin-top: auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            font-family: var(--font-mono);
+            font-size: var(--meta-size);
+            text-transform: uppercase;
+            letter-spacing: 0.14em;
+            opacity: 0.55;
+            padding: 1.5rem var(--slide-padding) var(--slide-padding);
+            border-top: 1px solid rgba(127, 127, 127, 0.25);
+            position: relative;
+            z-index: 2;
+        }
+
+        .mixed-text { word-spacing: 0.125em; }
+        .mixed-text > * { word-spacing: normal; }
+        .mixed-text [lang="en"] { margin-inline: 0.125em; }
+
+        /* ===========================================
+           IMAGE SYSTEM
+           =========================================== */
+        .frame-img {
+            overflow: hidden;
+            position: relative;
+            background: rgba(0, 0, 0, 0.04);
+            width: 100%;
+        }
+
+        .frame-img > img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: top center;
+            display: block;
+        }
+
+        .frame-img.r-16x10 { aspect-ratio: 16/10; max-height: 56vh; }
+        .frame-img.r-4x3   { aspect-ratio: 4/3;   max-height: 48vh; }
+        .frame-img.h-24    { height: 24vh; }
+
+        /* ===========================================
+           THEME SLIDES
+           =========================================== */
+        .slide.hero,
+        .slide.light { background: var(--editorial-bg); color: var(--editorial-ink); }
+
+        .slide.hero.dark,
+        .slide.dark { background: var(--editorial-ink); color: var(--editorial-paper); }
+
+        .letterpress {
+            text-shadow: 0 1px 0 rgba(255,255,255,0.6), 0 -1px 0 rgba(0,0,0,0.12);
+        }
+
+        .hairline {
+            width: 100%;
+            height: 1px;
+            background: currentColor;
+            opacity: 0.25;
+            margin-top: var(--content-gap);
+            transform-origin: left;
+        }
+
+        /* ===========================================
+           TEXTURE OVERLAY
+           =========================================== */
+        .texture-overlay {
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            z-index: 1;
+            opacity: 0.06;
+            mix-blend-mode: multiply;
+            background-image:
+                radial-gradient(circle at 20% 30%, rgba(0,0,0,0.08) 0%, transparent 1%),
+                radial-gradient(circle at 70% 60%, rgba(0,0,0,0.06) 0%, transparent 1%),
+                radial-gradient(circle at 40% 80%, rgba(0,0,0,0.07) 0%, transparent 1%);
+            background-size: 120px 120px;
+        }
+
+        /* ===========================================
+           WEBGL BACKGROUND
+           =========================================== */
+        .bg {
+            position: fixed;
+            inset: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: 0;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.8s var(--ease-out-expo);
+        }
+
+        body.light-bg #bg-light,
+        body.dark-bg #bg-dark { opacity: 1; }
+
+        /* ===========================================
+           ANIMATION RECIPES
+           =========================================== */
+        [data-anim] {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity var(--duration-normal) var(--ease-out-expo), transform var(--duration-normal) var(--ease-out-expo);
+        }
+
+        .slide.visible [data-anim] { opacity: 1; transform: translateY(0); }
+
+        .slide[data-animate="hero"] [data-anim] { transform: translateY(30px); transition-duration: var(--duration-slow); }
+        .slide[data-animate="hero"].visible [data-anim]:nth-child(1) { transition-delay: 0.12s; }
+        .slide[data-animate="hero"].visible [data-anim]:nth-child(2) { transition-delay: 0.24s; }
+        .slide[data-animate="hero"].visible [data-anim]:nth-child(3) { transition-delay: 0.36s; }
+        .slide[data-animate="hero"].visible [data-anim]:nth-child(4) { transition-delay: 0.48s; }
+        .slide[data-animate="hero"].visible [data-anim]:nth-child(5) { transition-delay: 0.60s; }
+
+        .slide[data-animate="cascade"].visible [data-anim]:nth-child(1) { transition-delay: 0.08s; }
+        .slide[data-animate="cascade"].visible [data-anim]:nth-child(2) { transition-delay: 0.16s; }
+        .slide[data-animate="cascade"].visible [data-anim]:nth-child(3) { transition-delay: 0.24s; }
+        .slide[data-animate="cascade"].visible [data-anim]:nth-child(4) { transition-delay: 0.32s; }
+
+        .slide[data-animate="quote"] [data-anim] { transform: translateY(10px); transition-duration: 0.6s; }
+        .slide[data-animate="quote"].visible [data-anim]:nth-child(1) { transition-delay: 0.10s; }
+        .slide[data-animate="quote"].visible [data-anim]:nth-child(2) { transition-delay: 0.30s; }
+        .slide[data-animate="quote"].visible [data-anim]:nth-child(3) { transition-delay: 0.55s; }
+
+        .slide[data-animate="directional"] [data-anim][data-dir="left"] { transform: translateX(-30px); }
+        .slide[data-animate="directional"] [data-anim][data-dir="right"] { transform: translateX(30px); }
+        .slide[data-animate="directional"].visible [data-anim] { transform: translateX(0); }
+
+        @keyframes line-extend {
+            from { transform: scaleX(0); }
+            to   { transform: scaleX(1); }
+        }
+        .line-extend { transform-origin: left; }
+        .slide.visible .line-extend { animation: line-extend 0.6s var(--ease-out-expo) forwards; }
+
+        /* Low power / reduced motion */
+        body.low-power .bg,
+        body.low-power [data-anim] {
+            animation: none !important;
+            opacity: 1 !important;
+            transform: none !important;
+            filter: none !important;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.2s !important;
+            }
+            html { scroll-behavior: auto; }
+            [data-anim], .line-extend { opacity: 1 !important; transform: none !important; filter: none !important; }
+            .bg { opacity: 0 !important; }
+        }
+
+        /* ===========================================
+           NAV DOTS
+           =========================================== */
+        .nav-dots {
+            position: fixed;
+            right: 1.5rem;
+            top: 50%;
+            transform: translateY(-50%);
+            display: flex;
+            flex-direction: column;
+            gap: 0.6rem;
+            z-index: 100;
+        }
+        .nav-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            border: 1px solid currentColor;
+            background: transparent;
+            cursor: pointer;
+            opacity: 0.5;
+        }
+        .nav-dot.active { background: currentColor; opacity: 0.9; }
+
+        /* ===========================================
+           RESPONSIVE
+           =========================================== */
+        @media (max-width: 768px) {
+            .h-hero { font-size: clamp(2rem, 12vw, 3.5rem); }
+        }
+    </style>
+</head>
+<body>
+    <canvas id="bg-dark" class="bg" aria-hidden="true"></canvas>
+    <canvas id="bg-light" class="bg" aria-hidden="true"></canvas>
+    <nav class="nav-dots"></nav>
+
+    <div id="deck">
+        <!-- L01 Hero Cover -->
+        <section class="slide hero light" data-layout="L01" data-animate="hero">
+            <div class="texture-overlay" aria-hidden="true"></div>
+            <div class="chrome">
+                <div>A Talk · 2026.04.22</div>
+                <div>Vol.01</div>
+            </div>
+            <div class="slide-content mixed-text">
+                <div class="kicker" data-anim>封面故事 · Cover Story</div>
+                <h1 class="h-hero letterpress" data-anim>一人公司</h1>
+                <h2 class="h-sub" data-anim>被 AI 折叠的组织</h2>
+                <p class="lead" style="max-width:60vw;" data-anim>
+                    一个 AI 创作者 —— 在 64 天里写了 11 万行代码、在 9 个平台上持续输出。
+                </p>
+                <div class="meta-row" data-anim>
+                    <span>Editorial</span><span>·</span><span>Magazine</span>
+                </div>
+            </div>
+            <div class="foot">
+                <div>一场关于 AI · 组织 · 个体的分享</div>
+                <div>— 2026 —</div>
+            </div>
+        </section>
+
+        <!-- L03 Big Numbers -->
+        <section class="slide light" data-layout="L03" data-animate="cascade">
+            <div class="texture-overlay" aria-hidden="true"></div>
+            <div class="slide-content mixed-text">
+                <div class="kicker" data-anim>数据 Data</div>
+                <div class="big-num" data-anim>64</div>
+                <p class="lead" data-anim>天完成 11 万行代码，覆盖 9 个内容平台。</p>
+                <div class="hairline line-extend" data-anim></div>
+            </div>
+        </section>
+
+        <!-- L04 Quote + Image -->
+        <section class="slide dark" data-layout="L04" data-animate="directional">
+            <div class="texture-overlay" aria-hidden="true"></div>
+            <div class="slide-content mixed-text" style="display:grid; grid-template-columns:1fr 1fr; gap:var(--section-gap); align-items:center;">
+                <div data-anim data-dir="left">
+                    <div class="kicker">故事 Story</div>
+                    <h2 class="h-xl" style="margin-bottom:var(--content-gap);">一个人的军队</h2>
+                    <p class="body">
+                        过去需要一整个团队的工作，现在由一个人加上 AI 完成。这不是效率的简单提升，而是生产关系的重构。
+                    </p>
+                </div>
+                <figure class="frame-img r-16x10" data-anim data-dir="right">
+                    <img src="https://images.unsplash.com/photo-1497366216548-37526070297c?w=1200&q=80" alt="工作空间">
+                </figure>
+            </div>
+        </section>
+
+        <!-- L07 Big Quote -->
+        <section class="slide dark" data-layout="L07" data-animate="quote">
+            <div class="texture-overlay" aria-hidden="true"></div>
+            <div class="slide-content mixed-text">
+                <div class="kicker" data-anim>Quote</div>
+                <blockquote class="h-xl" style="font-family:var(--font-display); max-width:75vw;" data-anim>
+                    "AI 不会替代人，但会用 AI 的人会替代不会用的人。"
+                </blockquote>
+                <div class="meta-row" data-anim>
+                    <span>—</span><span>歸藏</span><span>·</span><span>一人公司</span>
+                </div>
+                <div class="hairline line-extend" data-anim></div>
+            </div>
+        </section>
+
+        <!-- L09 Closing -->
+        <section class="slide hero light" data-layout="L09" data-animate="hero">
+            <div class="texture-overlay" aria-hidden="true"></div>
+            <div class="chrome">
+                <div>Thanks</div>
+                <div>End</div>
+            </div>
+            <div class="slide-content mixed-text">
+                <div class="kicker" data-anim>结语</div>
+                <h1 class="h-hero letterpress" data-anim>开始你的<br>一人公司</h1>
+                <p class="lead" style="max-width:60vw;" data-anim>
+                    工具已经 ready，唯一的问题是：你准备好了吗？
+                </p>
+            </div>
+            <div class="foot">
+                <div>demo@example.com</div>
+                <div>— 2026 —</div>
+            </div>
+        </section>
+    </div>
+
+    <script>
+        /* ===========================================
+           WEBGL BACKGROUND
+           =========================================== */
+        class WebGLBackground {
+            constructor(canvas, options = {}) {
+                this.canvas = canvas;
+                this.gl = canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
+                if (!this.gl) return;
+                this.running = true;
+                this.options = Object.assign({
+                    color1: [0.04, 0.06, 0.12],
+                    color2: [0.10, 0.14, 0.22]
+                }, options);
+                this.init();
+                this.resize();
+                window.addEventListener('resize', () => this.resize());
+                this.render();
+            }
+
+            init() {
+                const gl = this.gl;
+                const vertexSource = `
+                    attribute vec2 position;
+                    void main() { gl_Position = vec4(position, 0.0, 1.0); }
+                `;
+                const fragmentSource = `
+                    precision mediump float;
+                    uniform float u_time;
+                    uniform vec2 u_resolution;
+                    uniform vec3 u_color1;
+                    uniform vec3 u_color2;
+
+                    float noise(vec2 p) {
+                        return fract(sin(dot(p, vec2(12.9898, 78.233))) * 43758.5453);
+                    }
+
+                    float smoothNoise(vec2 p) {
+                        vec2 i = floor(p);
+                        vec2 f = fract(p);
+                        f = f * f * (3.0 - 2.0 * f);
+                        float a = noise(i);
+                        float b = noise(i + vec2(1.0, 0.0));
+                        float c = noise(i + vec2(0.0, 1.0));
+                        float d = noise(i + vec2(1.0, 1.0));
+                        return mix(mix(a, b, f.x), mix(c, d, f.x), f.y);
+                    }
+
+                    void main() {
+                        vec2 uv = gl_FragCoord.xy / u_resolution;
+                        float n = smoothNoise(uv * 3.0 + u_time * 0.05);
+                        n += 0.5 * smoothNoise(uv * 6.0 - u_time * 0.03);
+                        vec3 color = mix(u_color1, u_color2, n);
+                        gl_FragColor = vec4(color, 1.0);
+                    }
+                `;
+                const compile = (type, source) => {
+                    const shader = gl.createShader(type);
+                    gl.shaderSource(shader, source);
+                    gl.compileShader(shader);
+                    return shader;
+                };
+                const vs = compile(gl.VERTEX_SHADER, vertexSource);
+                const fs = compile(gl.FRAGMENT_SHADER, fragmentSource);
+                this.program = gl.createProgram();
+                gl.attachShader(this.program, vs);
+                gl.attachShader(this.program, fs);
+                gl.linkProgram(this.program);
+                gl.useProgram(this.program);
+
+                const buffer = gl.createBuffer();
+                gl.bindBuffer(gl.ARRAY_BUFFER, buffer);
+                gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1,-1, 1,-1, -1,1, -1,1, 1,-1, 1,1]), gl.STATIC_DRAW);
+                const pos = gl.getAttribLocation(this.program, 'position');
+                gl.enableVertexAttribArray(pos);
+                gl.vertexAttribPointer(pos, 2, gl.FLOAT, false, 0, 0);
+
+                this.uTime = gl.getUniformLocation(this.program, 'u_time');
+                this.uResolution = gl.getUniformLocation(this.program, 'u_resolution');
+                this.uColor1 = gl.getUniformLocation(this.program, 'u_color1');
+                this.uColor2 = gl.getUniformLocation(this.program, 'u_color2');
+                gl.uniform3fv(this.uColor1, this.options.color1);
+                gl.uniform3fv(this.uColor2, this.options.color2);
+            }
+
+            resize() {
+                if (!this.gl) return;
+                this.canvas.width = window.innerWidth;
+                this.canvas.height = window.innerHeight;
+                this.gl.viewport(0, 0, this.canvas.width, this.canvas.height);
+            }
+
+            stop() { this.running = false; }
+            start() { if (!this.running) { this.running = true; this.render(); } }
+
+            render() {
+                if (!this.running || !this.gl) return;
+                this.gl.uniform1f(this.uTime, performance.now() * 0.001);
+                this.gl.uniform2f(this.uResolution, this.canvas.width, this.canvas.height);
+                this.gl.drawArrays(this.gl.TRIANGLES, 0, 6);
+                requestAnimationFrame(() => this.render());
+            }
+        }
+
+        /* ===========================================
+           SLIDE PRESENTATION
+           =========================================== */
+        class SlidePresentation {
+            constructor() {
+                this.deck = document.getElementById('deck');
+                this.slides = document.querySelectorAll('.slide');
+                this.currentSlide = 0;
+                this.isHorizontal = document.documentElement.dataset.deck === 'horizontal';
+                this.webglDark = null;
+                this.webglLight = null;
+
+                this.setupIntersectionObserver();
+                this.setupKeyboardNav();
+                this.setupTouchNav();
+                this.setupWheelNav();
+                this.setupNavDots();
+                this.setupWebGL();
+                this.setupLowPower();
+
+                if (this.isHorizontal) this.setupHorizontal();
+
+                window.addEventListener('load', () => this.fitSlideContent());
+                window.addEventListener('resize', () => {
+                    this.fitSlideContent();
+                    if (this.isHorizontal) this.applyHorizontalTransform();
+                });
+                this.updateWebGLTheme();
+            }
+
+            setupHorizontal() {
+                if (!this.deck) return;
+                this.deck.style.width = `${this.slides.length * 100}vw`;
+                this.applyHorizontalTransform();
+            }
+
+            applyHorizontalTransform() {
+                if (!this.deck) return;
+                this.deck.style.transform = `translateX(-${this.currentSlide * 100}vw)`;
+            }
+
+            setupIntersectionObserver() {
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) entry.target.classList.add('visible');
+                    });
+                }, { threshold: 0.35 });
+                this.slides.forEach(slide => observer.observe(slide));
+            }
+
+            setupKeyboardNav() {
+                document.addEventListener('keydown', (e) => {
+                    if (e.target.getAttribute('contenteditable')) return;
+                    const nextKeys = this.isHorizontal ? ['ArrowRight','PageDown',' '] : ['ArrowDown','ArrowRight','PageDown',' '];
+                    const prevKeys = this.isHorizontal ? ['ArrowLeft','PageUp'] : ['ArrowUp','ArrowLeft','PageUp'];
+                    if (nextKeys.includes(e.key)) { e.preventDefault(); this.nextSlide(); }
+                    else if (prevKeys.includes(e.key)) { e.preventDefault(); this.prevSlide(); }
+                    else if (e.key === 'Home') { e.preventDefault(); this.goToSlide(0); }
+                    else if (e.key === 'End') { e.preventDefault(); this.goToSlide(this.slides.length - 1); }
+                    else if (e.key.toLowerCase() === 'b') { e.preventDefault(); this.toggleLowPower(); }
+                });
+            }
+
+            setupTouchNav() {
+                let startX = 0, startY = 0;
+                document.addEventListener('touchstart', e => {
+                    startX = e.touches[0].clientX;
+                    startY = e.touches[0].clientY;
+                }, { passive: true });
+                document.addEventListener('touchend', e => {
+                    const diffX = startX - e.changedTouches[0].clientX;
+                    const diffY = startY - e.changedTouches[0].clientY;
+                    if (this.isHorizontal) {
+                        if (Math.abs(diffX) > 50) diffX > 0 ? this.nextSlide() : this.prevSlide();
+                    } else {
+                        if (Math.abs(diffY) > 50) diffY > 0 ? this.nextSlide() : this.prevSlide();
+                    }
+                }, { passive: true });
+            }
+
+            setupWheelNav() {
+                let wheelLock = false;
+                document.addEventListener('wheel', (e) => {
+                    if (wheelLock) return;
+                    wheelLock = true;
+                    setTimeout(() => wheelLock = false, 700);
+                    e.deltaY > 0 ? this.nextSlide() : this.prevSlide();
+                }, { passive: true });
+            }
+
+            setupNavDots() {
+                const nav = document.querySelector('.nav-dots');
+                if (!nav) return;
+                this.slides.forEach((_, i) => {
+                    const dot = document.createElement('button');
+                    dot.className = 'nav-dot';
+                    dot.setAttribute('aria-label', `Go to slide ${i + 1}`);
+                    dot.addEventListener('click', () => this.goToSlide(i));
+                    nav.appendChild(dot);
+                });
+                this.updateActiveDot();
+            }
+
+            updateActiveDot() {
+                const nav = document.querySelector('.nav-dots');
+                if (!nav) return;
+                const dots = nav.querySelectorAll('.nav-dot');
+                dots.forEach((dot, i) => dot.classList.toggle('active', i === this.currentSlide));
+            }
+
+            setupWebGL() {
+                const darkCanvas = document.getElementById('bg-dark');
+                const lightCanvas = document.getElementById('bg-light');
+                if (!darkCanvas || !lightCanvas) return;
+                this.webglDark = new WebGLBackground(darkCanvas, {
+                    color1: [0.04, 0.06, 0.12],
+                    color2: [0.10, 0.14, 0.22]
+                });
+                this.webglLight = new WebGLBackground(lightCanvas, {
+                    color1: [0.95, 0.94, 0.90],
+                    color2: [0.88, 0.85, 0.78]
+                });
+            }
+
+            updateWebGLTheme() {
+                const current = this.slides[this.currentSlide];
+                if (!current) return;
+                const isLight = current.classList.contains('light') || current.classList.contains('hero-light');
+                document.body.classList.toggle('light-bg', isLight);
+                document.body.classList.toggle('dark-bg', !isLight);
+            }
+
+            setupLowPower() {
+                if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                    document.body.classList.add('low-power');
+                }
+            }
+
+            toggleLowPower() {
+                document.body.classList.toggle('low-power');
+                const isLow = document.body.classList.contains('low-power');
+                if (this.webglDark) isLow ? this.webglDark.stop() : this.webglDark.start();
+                if (this.webglLight) isLow ? this.webglLight.stop() : this.webglLight.start();
+                if (isLow) this.slides.forEach(slide => slide.classList.add('visible'));
+            }
+
+            nextSlide() { this.goToSlide(Math.min(this.currentSlide + 1, this.slides.length - 1)); }
+            prevSlide() { this.goToSlide(Math.max(this.currentSlide - 1, 0)); }
+
+            goToSlide(index) {
+                if (index < 0 || index >= this.slides.length) return;
+                this.currentSlide = index;
+                if (this.isHorizontal) this.applyHorizontalTransform();
+                else this.slides[index].scrollIntoView({ behavior: 'smooth' });
+                this.updateActiveDot();
+                this.updateWebGLTheme();
+            }
+
+            fitSlideContent() {
+                this.slides.forEach((slide) => {
+                    const contents = slide.querySelectorAll('.slide-content');
+                    contents.forEach(content => {
+                        content.style.transform = '';
+                        content.style.transformOrigin = 'center center';
+                        void content.offsetHeight;
+                        const chrome = slide.querySelector('.chrome');
+                        const foot = slide.querySelector('.foot');
+                        let availableHeight = slide.clientHeight;
+                        if (chrome) availableHeight -= chrome.offsetHeight;
+                        if (foot) availableHeight -= foot.offsetHeight;
+                        if (content.scrollHeight > availableHeight) {
+                            const scale = Math.max(0.5, (availableHeight / content.scrollHeight) * 0.95);
+                            content.style.transform = `scale(${scale})`;
+                        }
+                    });
+                });
+            }
+        }
+
+        new SlidePresentation();
+    </script>
+</body>
+</html>

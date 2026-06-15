@@ -1,465 +1,208 @@
-# 蓝图风格 (Blueprint)
+# Combo 8 — 蓝图设计（Blueprint）
 
-源于建筑和工程制图的技术美学，以深蓝背景、精确线条和网格系统为特征，传达专业、精准、技术性的视觉感受。
+## 1. 设计理念 / 角色定义
 
----
+源于建筑和工程制图的技术美学：深蓝底、白线网格、精确标注。升级为“数字工程蓝图”，在保留制图精确感的同时加入工程标题栏、比例尺、折叠线、修订号和带箭头端点的尺寸线。
 
-## 角色定义
+**角色**：一位把每张幻灯片都当作一张“可施工图纸”的技术美术。结构即装饰，标注即叙事。
 
-你是一位专精于 Blueprint（蓝图）设计风格的前端设计大师。你深谙建筑制图、工程图纸和技术插画的传统，
-对精确性、网格系统、等距投影和结构可视化有深刻理解。
-
-**适用场景**：
-- 建筑/工程/技术类演示
-- 产品设计展示和设计系统文档
-- 科技公司技术分享
-- 教育/培训类技术内容
-
-**情感表达**：专业、精确、技术、透明、可信赖
+**适用场景**：技术架构分享、产品设计文档、工程/建筑提案、开发者大会、设计系统规范。
 
 ---
 
-## 专业能力
+## 2. 风格约束（必须 / 禁止）
 
-### 视觉层次构建
-通过线条粗细、颜色亮度和标注层级来建立视觉层次。主要结构使用较粗的白色线条（2-3px），
-次要元素使用细线（1px）或虚线，背景网格使用极淡的线条营造深度感。
+**必须**：
+- 使用 4.8 节给出的蓝图色板。
+- Display/Annotation 首选 `OCR-B` 或 `DIN 1451`，并提供等宽降级。
+- Body 使用 `Sono` 或 `Fragment Mono`。
+- 每页包含：工程标题栏、比例尺、修订号/日期、至少一条带箭头端点的尺寸线。
+- 30° 等轴测投影用于立体示意图。
+- 使用 `references/textures.css` 中的 `--texture-grain` 作为极淡屏幕颗粒层。
 
-### 色彩理论应用
-以深蓝色为主调，配合白色/浅青色线条形成高对比度。使用发光效果（glow）强调关键元素，
-营造数字蓝图的现代感而非传统印刷蓝图的复古感。
-
-### 排版与字体选择
-选择等宽字体（Monospace）强化技术属性。标题使用粗体等宽字体，正文使用常规等重，
-标注和测量值使用小字号等宽字体，形成统一的工程图纸感。
-
-### 交互设计思维
-悬停效果模拟"绘制中"的动画，元素入场时带有线条绘制动画（stroke-dashoffset），
-点击反馈使用发光脉冲效果，整体营造"实时绘制"的交互体验。
+**禁止**：
+- 渐变填充、柔和阴影、大圆角（>4px）。
+- 彩色照片、装饰性无功能元素。
+- 纯 RGB 主色、默认 Display 字体（Inter / Space Grotesk / Nunito / Orbitron）。
+- 线条绘制动画未分阶段。
 
 ---
 
-## 设计哲学
-
-蓝图风格的核心价值观是**透明性与精确性**。它源自建筑和工程领域的技术图纸传统，
-通过展示"结构本身"而非"装饰表面"来传达信息。这种风格相信：
-
-- **过程即美学** — 网格、标注、测量线不是需要隐藏的辅助元素，而是设计的一部分
-- **精确即信任** — 每个元素都有明确的位置和尺寸，传达专业和可靠
-- **技术即艺术** — 工程制图的视觉语言本身就是一种美学表达
-
----
-
-## 风格约束
-
-### 必须遵循
-- 深蓝色背景（#0A1628 至 #1A2B4C 范围）
-- 网格系统必须可见（至少在背景层）
-- 所有线条使用精确的像素值，避免模糊
-- 字体必须使用等宽字体家族
-- 元素边缘保持锐利，圆角不超过 4px
-
-### 禁止使用
-- 渐变填充（纯色 + 发光效果代替）
-- 柔和阴影（使用硬边投影或发光）
-- 大圆角（>8px）和有机曲线
-- 彩色照片（使用线稿、图标或技术插画）
-- 装饰性图案和无功能性的元素
-
----
-
-## 核心要素
-
-### 色彩系统
+## 3. 色彩系统
 
 ```css
 :root {
-  /* 主色调 - 深蓝背景 */
-  --primary: #0A1628;
-  --primary-light: #152238;
-  --primary-dark: #050D18;
-
-  /* 线条色 */
-  --line-primary: #FFFFFF;
-  --line-secondary: #4A90D9;
-  --line-accent: #00D4FF;
-  --line-dim: rgba(255, 255, 255, 0.3);
-
-  /* 辅助色 */
-  --cyan-glow: #00FFFF;
-  --blueprint-blue: #0041BA;
-
-  /* 文字色 */
-  --text-primary: #FFFFFF;
-  --text-secondary: #8BA4C7;
-  --text-dim: #5A7A9E;
-
-  /* 强调/标注色 */
-  --accent: #FF6B35;
-  --accent-secondary: #FFD700;
-
-  /* 网格色 */
-  --grid-major: rgba(255, 255, 255, 0.15);
-  --grid-minor: rgba(255, 255, 255, 0.05);
-
-  /* 发光效果 */
-  --glow-cyan: 0 0 10px rgba(0, 212, 255, 0.5), 0 0 20px rgba(0, 212, 255, 0.3);
-  --glow-white: 0 0 8px rgba(255, 255, 255, 0.4);
+  --blueprint-bg:       #0A1628;
+  --blueprint-grid-major: rgba(255,255,255,0.08);
+  --blueprint-grid-minor: rgba(255,255,255,0.03);
+  --blueprint-line:     #FFFFFF;
+  --blueprint-line-secondary: #4A90D9;
+  --blueprint-accent:   #F4A261;     /* 琥珀，关键标注 */
+  --blueprint-dim:      rgba(255,255,255,0.35);
 }
 ```
-
-### 字体方案
-
-| 类型 | 字体名 | 来源 | 备选 |
-|------|--------|------|------|
-| Display | Space Grotesk | Google Fonts | JetBrains Mono |
-| Body | Space Mono | Google Fonts | IBM Plex Mono |
-| Annotation | JetBrains Mono | Google Fonts | Fira Code |
-
-**引入代码**：
-```html
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Space+Mono:wght@400;700&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet">
-```
-
-**字体使用规则**：
-```css
-.font-display {
-  font-family: 'Space Grotesk', 'JetBrains Mono', monospace;
-  font-weight: 700;
-  letter-spacing: 0.02em;
-}
-
-.font-body {
-  font-family: 'Space Mono', 'IBM Plex Mono', monospace;
-  font-weight: 400;
-  line-height: 1.6;
-}
-
-.font-annotation {
-  font-family: 'JetBrains Mono', 'Fira Code', monospace;
-  font-weight: 300;
-  font-size: 0.75rem;
-  letter-spacing: 0.05em;
-  text-transform: uppercase;
-}
-```
-
-### 布局模式
-
-**标题页布局**：
-```
-┌─────────────────────────────────────────────────────────────┐
-│ ┌─ ── ── ── ── ── ── ── ── ── ── ── ── ── ── ── ── ── ── ─┐ │
-│ │                        网格背景                          │ │
-│ │                                                          │ │
-│ │     ┌──────────────────────────────────┐                │ │
-│ │     │                                  │ ◄─ 标注        │ │
-│ │     │         主标题                    │                │ │
-│ │     │         ━━━━━━━━━━━━━━           │                │ │
-│ │     │         副标题                    │                │ │
-│ │     │                                  │                │ │
-│ │     └──────────────────────────────────┘                │ │
-│ │              │                                          │ │
-│ │              └── 测量线 (1200px)                        │ │
-│ │                                                          │ │
-│ └─ ── ── ── ── ── ── ── ── ── ── ── ── ── ── ── ── ── ── ─┘ │
-└─────────────────────────────────────────────────────────────┘
-```
-
-**内容页布局**：
-```
-┌─────────────────────────────────────────────────────────────┐
-│ ┌───────────────┐  ┌───────────────────────────────────┐   │
-│ │               │  │                                   │   │
-│ │   章节编号     │  │   ○ 要点一                        │   │
-│ │   01          │  │     └── 详细说明                  │   │
-│ │               │  │                                   │   │
-│ │   章节标题     │  │   ○ 要点二                        │   │
-│ │   ━━━━━━━━   │  │     └── 详细说明                  │   │
-│ │               │  │                                   │   │
-│ │               │  │   ┌─────────────────┐             │   │
-│ │  [等距图形]    │  │   │   示意图区域    │             │   │
-│ │               │  │   └─────────────────┘             │   │
-│ └───────────────┘  └───────────────────────────────────┘   │
-│ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ │
-│ ◄─────────────────────────────────────────────────────────► │
-└─────────────────────────────────────────────────────────────┘
-```
-
-### 装饰元素
-
-- **网格背景**：主网格（大格 80px）+ 次网格（小格 20px）
-- **测量线**：带端点的尺寸标注线
-- **标注框**：虚线边框 + 引线 + 文字说明
-- **等距图形**：30° 倾斜的立体几何图形
-- **连接线**：正交折线连接相关元素
-- **剖面符号**：填充斜线图案表示剖面
 
 ---
 
-## CSS 效果库
+## 4. 字体方案
 
-### 方案A：网格背景
+| 层级 | 字体 | 来源 | Fallback |
+|---|---|---|---|
+| Display / Annotation | **OCR-B** / **DIN 1451** | 工程字体 | `'JetBrains Mono', monospace` |
+| Body | **Sono** | Google Fonts | `'Fragment Mono', 'Noto Sans SC', monospace` |
+| Data / 标注 | **JetBrains Mono** | Google Fonts | `'Fragment Mono', monospace` |
+| 中文 | **Noto Sans SC** | Google Fonts | `system-ui, sans-serif` |
 
-**效果描述**：经典蓝图网格背景，主次双层网格，营造技术图纸感
+```html
+<link href="https://fonts.googleapis.com/css2?family=Sono:wght@400;600&family=Fragment+Mono&family=JetBrains+Mono:wght@400;500&family=Noto+Sans+SC:wght@400;500&display=swap" rel="stylesheet">
+```
+
+```css
+:root {
+  --font-display: 'OCR-B', 'DIN 1451', 'JetBrains Mono', monospace;
+  --font-body:    'Sono', 'Fragment Mono', 'Noto Sans SC', monospace;
+  --font-mono:    'JetBrains Mono', 'Fragment Mono', monospace;
+}
+```
+
+---
+
+## 5. 布局模式
+
+### 标题页
+- 网格背景铺满（主网格 80px，次网格 20px）。
+- 中央：带边框的标题容器，四周有角标。
+- 标题容器下方：水平尺寸线，两端箭头。
+- 右下角：工程标题栏（项目名称、比例、修订号、日期）。
+
+### 内容页
+- 左侧 30%：大章节编号 + 等轴测示意图。
+- 右侧 70%：要点列表，使用虚线标注框。
+- 底部：折叠线（长虚线从一边到另一边）。
+
+---
+
+## 6. CSS 效果库
 
 ```css
 /* 蓝图网格背景 */
 .blueprint-grid {
-  background-color: #0A1628;
+  background-color: var(--blueprint-bg);
   background-image:
-    /* 次网格 - 20px */
-    linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
-    /* 主网格 - 80px */
-    linear-gradient(rgba(255, 255, 255, 0.08) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255, 255, 255, 0.08) 1px, transparent 1px);
-  background-size:
-    20px 20px,
-    20px 20px,
-    80px 80px,
-    80px 80px;
+    linear-gradient(var(--blueprint-grid-minor) 1px, transparent 1px),
+    linear-gradient(90deg, var(--blueprint-grid-minor) 1px, transparent 1px),
+    linear-gradient(var(--blueprint-grid-major) 1px, transparent 1px),
+    linear-gradient(90deg, var(--blueprint-grid-major) 1px, transparent 1px);
+  background-size: 20px 20px, 20px 20px, 80px 80px, 80px 80px;
 }
 
-/* 带发光的主网格 */
-.blueprint-grid-glow {
-  background-color: #0A1628;
-  background-image:
-    linear-gradient(rgba(0, 212, 255, 0.1) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(0, 212, 255, 0.1) 1px, transparent 1px);
-  background-size: 40px 40px;
-  box-shadow: inset 0 0 60px rgba(0, 212, 255, 0.1);
+/* 角标 */
+.corner-mark {
+  position: absolute; width: 24px; height: 24px;
+  border: 2px solid var(--blueprint-dim);
 }
-```
+.corner-mark.tl { top: 20px; left: 20px; border-right: none; border-bottom: none; }
+.corner-mark.tr { top: 20px; right: 20px; border-left: none; border-bottom: none; }
+.corner-mark.bl { bottom: 20px; left: 20px; border-right: none; border-top: none; }
+.corner-mark.br { bottom: 20px; right: 20px; border-left: none; border-top: none; }
 
-### 方案B：线条绘制动画
-
-**效果描述**：SVG 线条描边动画，模拟"实时绘制"效果
-
-```css
-/* 线条绘制动画 */
-.draw-line {
-  stroke-dasharray: 1000;
-  stroke-dashoffset: 1000;
-  animation: draw 2s ease-out forwards;
-}
-
-@keyframes draw {
-  to {
-    stroke-dashoffset: 0;
-  }
-}
-
-/* 发光线条 */
-.glow-line {
-  stroke: #00D4FF;
-  stroke-width: 2;
-  filter: drop-shadow(0 0 4px rgba(0, 212, 255, 0.8));
-}
-
-/* 虚线动画 */
-.dashed-animated {
-  stroke-dasharray: 8 4;
-  animation: dash-move 20s linear infinite;
-}
-
-@keyframes dash-move {
-  to {
-    stroke-dashoffset: -240;
-  }
-}
-```
-
-### 方案C：标注框与测量线
-
-**效果描述**：技术图纸风格的标注元素
-
-```css
-/* 标注框 */
-.annotation-box {
-  border: 1px dashed rgba(255, 255, 255, 0.4);
-  padding: 12px 16px;
-  position: relative;
-  background: rgba(10, 22, 40, 0.8);
-}
-
-.annotation-box::before {
-  content: attr(data-label);
-  position: absolute;
-  top: -10px;
-  left: 12px;
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 10px;
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  color: #00D4FF;
-  background: #0A1628;
-  padding: 0 8px;
-}
-
-/* 测量线 */
+/* 尺寸线带箭头端点 */
 .dimension-line {
-  position: relative;
-  height: 1px;
-  background: rgba(255, 255, 255, 0.5);
+  position: relative; height: 1px;
+  background: var(--blueprint-line);
 }
-
 .dimension-line::before,
 .dimension-line::after {
-  content: '';
-  position: absolute;
-  top: -6px;
-  width: 1px;
-  height: 13px;
-  background: rgba(255, 255, 255, 0.5);
+  content: ''; position: absolute; top: -5px;
+  width: 0; height: 0; border-style: solid;
+}
+.dimension-line::before {
+  left: -6px;
+  border-width: 5px 6px 5px 0;
+  border-color: transparent var(--blueprint-line) transparent transparent;
+}
+.dimension-line::after {
+  right: -6px;
+  border-width: 5px 0 5px 6px;
+  border-color: transparent transparent transparent var(--blueprint-line);
 }
 
-.dimension-line::before { left: 0; }
-.dimension-line::after { right: 0; }
+/* 工程标题栏 */
+.title-block {
+  position: absolute; bottom: 24px; right: 24px;
+  border: 1px solid var(--blueprint-line);
+  background: rgba(10, 22, 40, 0.85);
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+.title-block td { padding: 6px 10px; border: 1px solid var(--blueprint-dim); color: var(--blueprint-line); }
+.title-block td.label { color: var(--blueprint-line-secondary); }
 
-.dimension-value {
-  position: absolute;
-  top: 4px;
-  left: 50%;
-  transform: translateX(-50%);
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 11px;
-  color: #8BA4C7;
-  background: #0A1628;
+/* 折叠线 */
+.fold-line {
+  position: absolute; left: 0; right: 0;
+  border-top: 1px dashed var(--blueprint-dim);
+}
+
+/* 标注框 */
+.annotation-box {
+  border: 1px dashed var(--blueprint-dim);
+  padding: 12px 16px; position: relative;
+  background: rgba(10, 22, 40, 0.7);
+}
+.annotation-box::before {
+  content: attr(data-label);
+  position: absolute; top: -10px; left: 12px;
+  font-family: var(--font-mono); font-size: 10px;
+  text-transform: uppercase; letter-spacing: 0.1em;
+  color: var(--blueprint-accent); background: var(--blueprint-bg);
   padding: 0 8px;
 }
-```
 
-### 方案D：等距投影
-
-**效果描述**：使用 CSS 3D 变换创建等距视图效果
-
-```css
-/* 等距投影容器 */
-.isometric-container {
-  transform: rotateX(60deg) rotateZ(-45deg);
-  transform-style: preserve-3d;
-}
-
-/* 等距立方体 */
-.isometric-cube {
-  position: relative;
-  width: 100px;
-  height: 100px;
-  transform-style: preserve-3d;
-}
-
-.isometric-cube .face {
-  position: absolute;
-  width: 100px;
-  height: 100px;
-  border: 1px solid rgba(0, 212, 255, 0.6);
-  background: rgba(0, 212, 255, 0.05);
-}
-
-.isometric-cube .top {
-  transform: translateZ(100px);
-}
-
-.isometric-cube .front {
-  transform: rotateX(-90deg) translateZ(50px);
-}
-
-.isometric-cube .right {
-  transform: rotateY(90deg) rotateX(-90deg) translateZ(50px);
+/* 真实扫描颗粒 */
+.texture-overlay {
+  position: absolute; inset: 0; pointer-events: none; z-index: 0;
+  opacity: 0.04; mix-blend-mode: overlay;
+  background-image: var(--texture-grain);
+  background-size: 200px 200px;
 }
 ```
 
 ---
 
-## 动画建议
+## 7. 动画建议
 
-### 入场动画
-
-| 元素 | 动画效果 | 时长 | 延迟 |
-|------|----------|------|------|
-| 网格背景 | 淡入 + 轻微缩放 | 0.8s | 0s |
-| 主标题 | 线条绘制 + 发光脉冲 | 1.2s | 0.3s |
-| 副标题 | 从左滑入 + 淡入 | 0.6s | 0.8s |
-| 标注框 | 逐个淡入 | 0.4s | 1.2s |
-| 图形元素 | 线条绘制动画 | 1.5s | 0.5s |
-
-### 强调动画
-
-- **发光脉冲**：关键元素的 box-shadow 周期性增强
-- **线条流动**：虚线边框的 stroke-dashoffset 动画
-- **标注闪烁**：重要标注的 opacity 周期变化
-- **测量线延伸**：尺寸线从中心向两端延伸
-
-### 过渡效果
-
-- **页面切换**：整体缩小淡出 + 新页面放大淡入
-- **元素揭示**：clip-path 从上到下揭示
-- **数据更新**：数字滚动更新效果
-
-### CSS 动画代码
+| 元素 | 效果 | 时长 | 触发 |
+|---|---|---|---|
+| 网格 | 淡入 | 400 ms | 进入 |
+| 标题容器边框 | clip-path 从左上展开 | 500 ms | 进入 |
+| 标题文字 | 透明度淡入 | 400 ms | 边框后 |
+| 尺寸线 | 宽度从 0 到 100% | 400 ms | 进入 |
+| 标注框 | 按顺序淡入 | 300 ms | 交错 100 ms |
 
 ```css
-/* 发光脉冲 */
-@keyframes glow-pulse {
-  0%, 100% {
-    box-shadow: 0 0 5px rgba(0, 212, 255, 0.3);
-  }
-  50% {
-    box-shadow: 0 0 20px rgba(0, 212, 255, 0.6), 0 0 40px rgba(0, 212, 255, 0.3);
-  }
+@keyframes border-reveal {
+  from { clip-path: inset(0 100% 100% 0); }
+  to   { clip-path: inset(0 0 0 0); }
 }
+.border-reveal { animation: border-reveal 0.5s ease-out forwards; }
 
-.glow-pulse {
-  animation: glow-pulse 2s ease-in-out infinite;
+@keyframes line-grow {
+  from { transform: scaleX(0); }
+  to   { transform: scaleX(1); }
 }
+.line-grow { transform-origin: center; animation: line-grow 0.4s ease-out forwards; }
 
-/* 线条揭示 */
-@keyframes line-reveal {
-  from {
-    clip-path: inset(0 100% 0 0);
-  }
-  to {
-    clip-path: inset(0 0 0 0);
-  }
-}
-
-.line-reveal {
-  animation: line-reveal 0.8s ease-out forwards;
-}
-
-/* 打字机效果 */
-@keyframes typewriter {
-  from { width: 0; }
-  to { width: 100%; }
-}
-
-.typewriter {
-  overflow: hidden;
-  white-space: nowrap;
-  animation: typewriter 1s steps(30) forwards;
-}
-
-/* 标注框入场 */
-@keyframes annotation-enter {
-  from {
-    opacity: 0;
-    transform: translateY(-10px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.annotation-enter {
-  animation: annotation-enter 0.4s ease-out forwards;
+@media (prefers-reduced-motion: reduce) {
+  .border-reveal, .line-grow, .reveal { animation: none; opacity: 1; transform: none; }
 }
 ```
 
 ---
 
-## 完整示例
+## 8. 完整 HTML 示例
 
 ```html
 <!DOCTYPE html>
@@ -467,203 +210,255 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Blueprint Style Presentation</title>
-  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Space+Mono:wght@400;700&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+  <title>Blueprint</title>
+  <link href="https://fonts.googleapis.com/css2?family=Sono:wght@400;600&family=Fragment+Mono&family=JetBrains+Mono:wght@400;500&family=Noto+Sans+SC:wght@400;500&display=swap" rel="stylesheet">
   <style>
     :root {
-      --primary: #0A1628;
-      --primary-light: #152238;
-      --line-primary: #FFFFFF;
-      --line-secondary: #4A90D9;
-      --line-accent: #00D4FF;
-      --line-dim: rgba(255, 255, 255, 0.3);
-      --text-primary: #FFFFFF;
-      --text-secondary: #8BA4C7;
-      --accent: #FF6B35;
-      --grid-major: rgba(255, 255, 255, 0.08);
-      --grid-minor: rgba(255, 255, 255, 0.03);
-      --glow-cyan: 0 0 20px rgba(0, 212, 255, 0.5);
+      --blueprint-bg:       #0A1628;
+      --blueprint-grid-major: rgba(255,255,255,0.08);
+      --blueprint-grid-minor: rgba(255,255,255,0.03);
+      --blueprint-line:     #FFFFFF;
+      --blueprint-line-secondary: #4A90D9;
+      --blueprint-accent:   #F4A261;
+      --blueprint-dim:      rgba(255,255,255,0.35);
+
+      --font-display: 'OCR-B', 'DIN 1451', 'JetBrains Mono', monospace;
+      --font-body:    'Sono', 'Fragment Mono', 'Noto Sans SC', monospace;
+      --font-mono:    'JetBrains Mono', 'Fragment Mono', monospace;
+
+      --title-size: clamp(2.5rem, 8vw, 5.5rem);
+      --body-size:  clamp(0.8rem, 1.3vw, 1rem);
+      --slide-padding: clamp(1.5rem, 4vw, 4rem);
     }
 
     * { margin: 0; padding: 0; box-sizing: border-box; }
 
-    body {
-      font-family: 'Space Mono', monospace;
-      background: var(--primary);
-      color: var(--text-primary);
-      min-height: 100vh;
-    }
+    html, body { height: 100%; overflow-x: hidden; background: var(--blueprint-bg); }
+    html { scroll-snap-type: y mandatory; scroll-behavior: smooth; }
 
     .slide {
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      padding: 4rem;
-      position: relative;
-      background-color: var(--primary);
+      width: 100vw; height: 100vh; height: 100dvh;
+      overflow: hidden; scroll-snap-align: start;
+      position: relative; display: flex; flex-direction: column;
+      color: var(--blueprint-line);
+      font-family: var(--font-body);
+      background-color: var(--blueprint-bg);
       background-image:
-        linear-gradient(var(--grid-minor) 1px, transparent 1px),
-        linear-gradient(90deg, var(--grid-minor) 1px, transparent 1px),
-        linear-gradient(var(--grid-major) 1px, transparent 1px),
-        linear-gradient(90deg, var(--grid-major) 1px, transparent 1px);
+        linear-gradient(var(--blueprint-grid-minor) 1px, transparent 1px),
+        linear-gradient(90deg, var(--blueprint-grid-minor) 1px, transparent 1px),
+        linear-gradient(var(--blueprint-grid-major) 1px, transparent 1px),
+        linear-gradient(90deg, var(--blueprint-grid-major) 1px, transparent 1px);
       background-size: 20px 20px, 20px 20px, 80px 80px, 80px 80px;
     }
 
-    .corner-mark {
-      position: absolute;
-      width: 24px;
-      height: 24px;
-      border-color: var(--line-dim);
-      border-style: solid;
-      border-width: 0;
+    .slide-content {
+      flex: 1; display: flex; flex-direction: column;
+      justify-content: center; padding: var(--slide-padding);
+      position: relative; z-index: 2; max-height: 100%;
     }
-    .corner-mark.tl { top: 20px; left: 20px; border-top-width: 2px; border-left-width: 2px; }
-    .corner-mark.tr { top: 20px; right: 20px; border-top-width: 2px; border-right-width: 2px; }
-    .corner-mark.bl { bottom: 20px; left: 20px; border-bottom-width: 2px; border-left-width: 2px; }
-    .corner-mark.br { bottom: 20px; right: 20px; border-bottom-width: 2px; border-right-width: 2px; }
+
+    .mixed-text { word-spacing: 0.125em; }
+    .mixed-text > * { word-spacing: normal; }
+
+    /* 真实扫描颗粒，值来自 references/textures.css --texture-grain */
+    .texture-overlay {
+      position: absolute; inset: 0; pointer-events: none; z-index: 1;
+      opacity: 0.04; mix-blend-mode: overlay;
+      background-image: var(--texture-grain);
+      background-size: 200px 200px;
+    }
+
+    .corner-mark {
+      position: absolute; width: 24px; height: 24px;
+      border: 2px solid var(--blueprint-dim); z-index: 3;
+    }
+    .corner-mark.tl { top: 20px; left: 20px; border-right: none; border-bottom: none; }
+    .corner-mark.tr { top: 20px; right: 20px; border-left: none; border-bottom: none; }
+    .corner-mark.bl { bottom: 20px; left: 20px; border-right: none; border-top: none; }
+    .corner-mark.br { bottom: 20px; right: 20px; border-left: none; border-top: none; }
 
     .title-container {
+      position: relative; align-self: center;
+      border: 1px solid var(--blueprint-line);
+      padding: clamp(2rem, 5vw, 4rem) clamp(2.5rem, 7vw, 5rem);
       text-align: center;
-      position: relative;
-      padding: 3rem 4rem;
-      border: 1px solid var(--line-dim);
-      background: rgba(10, 22, 40, 0.6);
+      background: rgba(10, 22, 40, 0.65);
     }
 
     .title-label {
-      position: absolute;
-      top: -12px;
-      left: 24px;
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 12px;
-      text-transform: uppercase;
-      letter-spacing: 0.15em;
-      color: var(--line-accent);
-      background: var(--primary);
+      position: absolute; top: -12px; left: 24px;
+      font-family: var(--font-mono); font-size: 11px;
+      text-transform: uppercase; letter-spacing: 0.15em;
+      color: var(--blueprint-accent); background: var(--blueprint-bg);
       padding: 0 12px;
     }
 
     .title {
-      font-family: 'Space Grotesk', monospace;
-      font-size: clamp(2.5rem, 8vw, 5rem);
-      font-weight: 700;
-      letter-spacing: 0.02em;
-      margin-bottom: 1rem;
-      text-shadow: var(--glow-cyan);
+      font-family: var(--font-display);
+      font-size: var(--title-size);
+      font-weight: 400;
+      letter-spacing: 0.04em;
+      line-height: 1;
     }
-
     .subtitle {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: clamp(0.875rem, 2vw, 1.125rem);
-      font-weight: 300;
-      color: var(--text-secondary);
-      letter-spacing: 0.05em;
-    }
-
-    .divider {
-      width: 200px;
-      height: 1px;
-      background: linear-gradient(90deg, transparent, var(--line-accent), transparent);
-      margin: 1.5rem auto;
-    }
-
-    .dimension {
-      position: absolute;
-      bottom: -40px;
-      left: 50%;
-      transform: translateX(-50%);
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 11px;
-      color: var(--text-secondary);
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-
-    .dimension::before,
-    .dimension::after {
-      content: '';
-      width: 60px;
-      height: 1px;
-      background: var(--line-dim);
-    }
-
-    .footer-info {
-      position: absolute;
-      bottom: 40px;
-      right: 40px;
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 10px;
-      color: var(--text-secondary);
-      text-transform: uppercase;
+      font-family: var(--font-mono);
+      font-size: clamp(0.8rem, 1.6vw, 1.1rem);
+      color: var(--blueprint-line-secondary);
       letter-spacing: 0.1em;
+      margin-top: 1rem;
+      text-transform: uppercase;
     }
 
-    /* 动画 */
-    @keyframes draw-border {
+    .dimension-wrap {
+      position: absolute; bottom: -36px; left: 50%;
+      transform: translateX(-50%); width: 80%;
+    }
+    .dimension-line {
+      position: relative; height: 1px;
+      background: var(--blueprint-line);
+      transform-origin: center;
+    }
+    .dimension-line::before,
+    .dimension-line::after {
+      content: ''; position: absolute; top: -5px;
+      width: 0; height: 0; border-style: solid;
+    }
+    .dimension-line::before {
+      left: -6px;
+      border-width: 5px 6px 5px 0;
+      border-color: transparent var(--blueprint-line) transparent transparent;
+    }
+    .dimension-line::after {
+      right: -6px;
+      border-width: 5px 0 5px 6px;
+      border-color: transparent transparent transparent var(--blueprint-line);
+    }
+    .dimension-value {
+      position: absolute; top: 6px; left: 50%;
+      transform: translateX(-50%);
+      font-family: var(--font-mono); font-size: 11px;
+      color: var(--blueprint-line-secondary); background: var(--blueprint-bg);
+      padding: 0 8px;
+    }
+
+    .title-block {
+      position: absolute; bottom: 24px; right: 24px; z-index: 4;
+      border: 1px solid var(--blueprint-line);
+      background: rgba(10, 22, 40, 0.85);
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      border-collapse: collapse;
+    }
+    .title-block td { padding: 6px 10px; border: 1px solid var(--blueprint-dim); color: var(--blueprint-line); }
+    .title-block td.label { color: var(--blueprint-line-secondary); }
+
+    .fold-line {
+      position: absolute; left: 8%; right: 8%;
+      border-top: 1px dashed var(--blueprint-dim); z-index: 0;
+    }
+
+    .reveal { opacity: 0; transform: translateY(16px); transition: opacity 0.4s ease, transform 0.4s ease; }
+    .slide.visible .reveal { opacity: 1; transform: translateY(0); }
+
+    @keyframes border-reveal {
       from { clip-path: inset(0 100% 100% 0); }
-      to { clip-path: inset(0 0 0 0); }
+      to   { clip-path: inset(0 0 0 0); }
     }
+    .slide.visible .title-container { animation: border-reveal 0.5s ease-out forwards; }
 
-    .title-container {
-      animation: draw-border 1s ease-out forwards;
+    @keyframes line-grow {
+      from { transform: scaleX(0); }
+      to   { transform: scaleX(1); }
     }
+    .slide.visible .dimension-line { animation: line-grow 0.4s ease-out 0.4s forwards; }
 
-    @keyframes glow-pulse {
-      0%, 100% { text-shadow: 0 0 20px rgba(0, 212, 255, 0.3); }
-      50% { text-shadow: 0 0 40px rgba(0, 212, 255, 0.6), 0 0 60px rgba(0, 212, 255, 0.3); }
-    }
-
-    .title {
-      animation: glow-pulse 3s ease-in-out infinite;
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.2s !important; }
+      html { scroll-behavior: auto; }
+      .reveal, .title-container, .dimension-line { opacity: 1; transform: none; clip-path: none; }
     }
   </style>
 </head>
 <body>
   <section class="slide">
-    <div class="corner-mark tl"></div>
-    <div class="corner-mark tr"></div>
-    <div class="corner-mark bl"></div>
-    <div class="corner-mark br"></div>
+    <div class="texture-overlay" aria-hidden="true"></div>
+    <div class="corner-mark tl"></div><div class="corner-mark tr"></div>
+    <div class="corner-mark bl"></div><div class="corner-mark br"></div>
 
-    <div class="title-container">
-      <span class="title-label">Section 01</span>
-      <h1 class="title">BLUEPRINT</h1>
-      <div class="divider"></div>
-      <p class="subtitle">TECHNICAL DESIGN AESTHETIC</p>
-      <div class="dimension">1200px</div>
+    <div class="slide-content mixed-text">
+      <div class="title-container reveal">
+        <span class="title-label">Section 01</span>
+        <h1 class="title">BLUEPRINT</h1>
+        <p class="subtitle">技术图纸 / Technical Drawing</p>
+        <div class="dimension-wrap">
+          <div class="dimension-line"></div>
+          <span class="dimension-value">1200 px</span>
+        </div>
+      </div>
     </div>
 
-    <div class="footer-info">
-      Rev. 01 | Scale 1:1 | 2024
+    <table class="title-block">
+      <tr><td class="label">Project</td><td>System Arch</td></tr>
+      <tr><td class="label">Scale</td><td>1:1</td></tr>
+      <tr><td class="label">Rev</td><td>02</td></tr>
+      <tr><td class="label">Date</td><td>2026-06-15</td></tr>
+    </table>
+  </section>
+
+  <section class="slide">
+    <div class="texture-overlay" aria-hidden="true"></div>
+    <div class="fold-line" style="bottom:28%;"></div>
+    <div class="slide-content mixed-text">
+      <div style="display:grid; grid-template-columns: 1fr 2fr; gap: 4vw; align-items:center;">
+        <div class="reveal" style="font-family:var(--font-display); font-size:clamp(4rem,12vw,8rem); color:var(--blueprint-line-secondary); line-height:1;">02</div>
+        <div>
+          <div class="annotation-box reveal" data-label="Layer 1" style="margin-bottom:1rem;">
+            服务层 Service Layer：负责路由、认证与限流。
+          </div>
+          <div class="annotation-box reveal" data-label="Layer 2" style="margin-bottom:1rem;">
+            业务层 Business Layer：领域模型与用例编排。
+          </div>
+          <div class="annotation-box reveal" data-label="Layer 3">
+            数据层 Data Layer：仓储、缓存与事件持久化。
+          </div>
+        </div>
+      </div>
     </div>
   </section>
+
+  <script>
+    const slides = document.querySelectorAll('.slide');
+    let idx = 0;
+    const obs = new IntersectionObserver(entries => {
+      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+    }, { threshold: 0.35 });
+    slides.forEach(s => obs.observe(s));
+    document.addEventListener('keydown', e => {
+      if (['ArrowDown','ArrowRight','PageDown',' '].includes(e.key)) { e.preventDefault(); idx = Math.min(idx+1, slides.length-1); slides[idx].scrollIntoView({behavior:'smooth'}); }
+      else if (['ArrowUp','ArrowLeft','PageUp'].includes(e.key)) { e.preventDefault(); idx = Math.max(idx-1,0); slides[idx].scrollIntoView({behavior:'smooth'}); }
+    });
+  </script>
 </body>
 </html>
 ```
 
 ---
 
-## 代表案例
+## 9. 生图提示词库
 
-1. **Palantir Blueprint UI Toolkit** - [GitHub](https://github.com/palantir/blueprint)
-   - 特点：完整的设计系统，虽非视觉蓝图风格，但命名源于此概念
-
-2. **Dribbble Blueprint UI 搜索结果** - [Dribbble](https://dribbble.com/search/blueprint-ui)
-   - 特点：大量蓝图风格的 UI 设计灵感
-
-3. **LobeHub Blueprint UI Skill** - [LobeHub](https://lobehub.com/skills/superhq-ai-shuru-blueprint-ui)
-   - 特点：专门用于生成蓝图风格网页的 AI 技能
+| 场景 | 提示词 |
+|---|---|
+| 封面 | dark blueprint paper, white technical grid, engineering title block, amber accent annotations, dimension lines with arrowheads, precise monospace typography |
+| 架构图 | isometric cube wireframes on blueprint grid, 30-degree projection, dashed fold lines, OCR-B labels, dark navy background |
+| 纹理 | scanned 35mm film grain, subtle grey noise, seamless tile, 4% opacity, technical blueprint screen texture |
 
 ---
 
-## 参考来源
+## 10. 代表案例与参考来源
 
-- [Blueprint Color Scheme - SchemeColor](https://www.schemecolor.com/blueprint.php)
-- [Blueprint Blue - Icons8 Colors](https://icons8.com/colors/blueprint-blue)
-- [Space Mono - Google Fonts](https://fonts.google.com/specimen/Space+Mono)
-- [CSS Isometric Examples - FreeFrontend](https://freefrontend.com/css-isometric/)
-- [Blueprint UI Design Inspiration - Dribbble](https://dribbble.com/search/blueprint-ui)
-- [Isometric Design Guide - Linearity](https://www.linearity.io/blog/isometric-design/)
+- **Palantir Blueprint** — 命名来源，强调系统化的技术图纸美学。
+- **Dribbble “blueprint UI”** — 工程标注、标题栏、尺寸线的当代演绎。
+- **ISO 5455 / DIN 1451** — 工程制图字体与标注规范。
+

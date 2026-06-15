@@ -1,15 +1,18 @@
 /* ===========================================
    VIEWPORT FITTING: MANDATORY BASE STYLES
+   SlideCraft × Guizang 升级后的统一设计系统
    Include this ENTIRE file in every presentation.
-   These styles ensure slides fit exactly in the viewport.
    =========================================== */
 
 /* 1. Lock html/body to viewport */
 html, body {
     height: 100%;
     overflow-x: hidden;
+    margin: 0;
+    padding: 0;
 }
 
+/* 纵向默认（向后兼容） */
 html {
     scroll-snap-type: y mandatory;
     scroll-behavior: smooth;
@@ -34,34 +37,310 @@ html {
     flex-direction: column;
     justify-content: center;
     max-height: 100%;
+    min-height: 0; /* CRITICAL: allows flex shrinking */
     overflow: hidden; /* Double-protection against overflow */
     padding: var(--slide-padding);
+    position: relative;
+    z-index: 2;
 }
 
-/* 4. ALL typography uses clamp() for responsive scaling */
+.slide-content > * {
+    flex-shrink: 1;
+    min-height: 0;
+}
+
+/* ===========================================
+   UNIFIED DESIGN TOKENS
+   All combos share these variables; combos may override.
+   =========================================== */
 :root {
-    /* Titles scale from mobile to desktop */
-    --title-size: clamp(1.5rem, 5vw, 4rem);
-    --h2-size: clamp(1.25rem, 3.5vw, 2.5rem);
-    --h3-size: clamp(1rem, 2.5vw, 1.75rem);
+    /* Colors */
+    --bg-primary: #0a0f1c;
+    --bg-secondary: #111827;
+    --text-primary: #ffffff;
+    --text-secondary: #9ca3af;
+    --accent: #c75b39;
+    --accent-on: #ffffff;
+    --accent-glow: rgba(199, 91, 57, 0.3);
 
-    /* Body text */
-    --body-size: clamp(0.75rem, 1.5vw, 1.125rem);
-    --small-size: clamp(0.65rem, 1vw, 0.875rem);
+    /* Typography */
+    --font-display: 'Clash Display', 'Anton', sans-serif;
+    --font-body: 'Satoshi', 'DM Sans', 'Noto Sans SC', sans-serif;
+    --font-mono: 'JetBrains Mono', monospace;
 
-    /* Spacing scales with viewport */
-    --slide-padding: clamp(1rem, 4vw, 4rem);
-    --content-gap: clamp(0.5rem, 2vw, 2rem);
+    /* Font sizes — all clamp() */
+    --h-hero-size: clamp(2.5rem, 10vw, 8rem);
+    --h-xl-size: clamp(2rem, 6vw, 5rem);
+    --h-sub-size: clamp(1.25rem, 2.5vw, 2rem);
+    --lead-size: clamp(1rem, 1.8vw, 1.5rem);
+    --body-size: clamp(0.875rem, 1.2vw, 1.125rem);
+    --meta-size: clamp(0.65rem, 0.9vw, 0.8rem);
+
+    /* Legacy aliases for backward compatibility */
+    --title-size: var(--h-xl-size);
+    --subtitle-size: var(--h-sub-size);
+    --small-size: var(--meta-size);
+
+    /* Spacing */
+    --slide-padding: clamp(1.5rem, 4vw, 4rem);
+    --content-gap: clamp(1rem, 2vw, 2rem);
+    --section-gap: clamp(2rem, 5vh, 4rem);
     --element-gap: clamp(0.25rem, 1vw, 1rem);
+
+    /* Animation */
+    --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+    --ease-in-out-quint: cubic-bezier(0.86, 0, 0.07, 1);
+    --duration-fast: 0.2s;
+    --duration-normal: 0.5s;
+    --duration-slow: 0.7s;
 }
 
-/* 5. Cards/containers use viewport-relative max sizes */
+/* ===========================================
+   UNIFIED TYPOGRAPHY CLASSES
+   Shared across all combos.
+   =========================================== */
+
+/* Title hierarchy */
+.h-hero {
+    font-family: var(--font-display);
+    font-size: var(--h-hero-size);
+    line-height: 0.95;
+    letter-spacing: -0.02em;
+    font-weight: 700;
+}
+
+.h-xl {
+    font-family: var(--font-display);
+    font-size: var(--h-xl-size);
+    line-height: 1.05;
+    font-weight: 700;
+}
+
+.h-sub {
+    font-family: var(--font-body);
+    font-size: var(--h-sub-size);
+    line-height: 1.25;
+    opacity: 0.75;
+}
+
+.lead {
+    font-family: var(--font-body);
+    font-size: var(--lead-size);
+    line-height: 1.5;
+}
+
+.body {
+    font-family: var(--font-body);
+    font-size: var(--body-size);
+    line-height: 1.65;
+}
+
+.meta {
+    font-family: var(--font-mono);
+    font-size: var(--meta-size);
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    opacity: 0.6;
+}
+
+/* Kicker */
+.kicker {
+    font-family: var(--font-mono);
+    font-size: var(--meta-size);
+    text-transform: uppercase;
+    letter-spacing: 0.25em;
+    opacity: 0.6;
+    margin-bottom: var(--content-gap);
+}
+
+.kicker::before {
+    content: "";
+    display: inline-block;
+    width: 24px;
+    height: 1px;
+    background: currentColor;
+    margin-right: 0.8em;
+    vertical-align: middle;
+}
+
+/* Numbers */
+.big-num {
+    font-family: var(--font-display);
+    font-size: clamp(3rem, 12vw, 10rem);
+    line-height: 0.85;
+    font-feature-settings: "tnum";
+    font-weight: 700;
+}
+
+.mid-num {
+    font-family: var(--font-display);
+    font-size: clamp(2rem, 6vw, 5rem);
+    line-height: 0.9;
+    font-feature-settings: "tnum";
+    font-weight: 700;
+}
+
+/* Magazine chrome (top metadata) */
+.chrome {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    font-family: var(--font-mono);
+    font-size: var(--meta-size);
+    text-transform: uppercase;
+    letter-spacing: 0.16em;
+    opacity: 0.65;
+    margin-bottom: auto;
+    position: relative;
+    z-index: 2;
+    padding: var(--slide-padding) var(--slide-padding) 0;
+}
+
+/* Magazine foot (bottom metadata) */
+.foot {
+    margin-top: auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    font-family: var(--font-mono);
+    font-size: var(--meta-size);
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    opacity: 0.55;
+    padding: 1.5rem var(--slide-padding) var(--slide-padding);
+    border-top: 1px solid rgba(127, 127, 127, 0.25);
+    position: relative;
+    z-index: 2;
+}
+
+/* Meta row */
+.meta-row {
+    display: flex;
+    gap: 0.6em;
+    align-items: center;
+    font-family: var(--font-mono);
+    font-size: var(--meta-size);
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    opacity: 0.65;
+}
+
+/* ===========================================
+   CJK / LATIN MIXED TEXT
+   =========================================== */
+.mixed-text {
+    word-spacing: 0.125em;
+}
+
+.mixed-text > * {
+    word-spacing: normal;
+}
+
+.mixed-text [lang="en"] {
+    margin-inline: 0.125em;
+}
+
+/* ===========================================
+   UNIFIED IMAGE SYSTEM
+   =========================================== */
+
+/* Image container: fixed height + crop bottom only */
+.frame-img {
+    overflow: hidden;
+    position: relative;
+    background: rgba(0, 0, 0, 0.04);
+    width: 100%;
+}
+
+.frame-img > img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: top center;
+    display: block;
+}
+
+.frame-img.fit-contain > img {
+    object-fit: contain;
+    object-position: center;
+}
+
+/* Standard ratios */
+.frame-img.r-21x9  { aspect-ratio: 21/9;  max-height: 64vh; }
+.frame-img.r-16x9  { aspect-ratio: 16/9;  max-height: 56vh; }
+.frame-img.r-16x10 { aspect-ratio: 16/10; max-height: 56vh; }
+.frame-img.r-4x3   { aspect-ratio: 4/3;   max-height: 48vh; }
+.frame-img.r-3x2   { aspect-ratio: 3/2;   max-height: 46vh; }
+.frame-img.r-1x1   { aspect-ratio: 1/1;   max-height: 42vh; }
+
+/* Height classes (for grid images) */
+.frame-img.h-16 { height: 16vh; }
+.frame-img.h-20 { height: 20vh; }
+.frame-img.h-24 { height: 24vh; }
+.frame-img.h-28 { height: 28vh; }
+.frame-img.h-32 { height: 32vh; }
+
+/* Image placeholder */
+.img-slot {
+    border: 1.5px dashed rgba(127, 127, 127, 0.4);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    opacity: 0.5;
+    aspect-ratio: 16/9;
+    background: rgba(0, 0, 0, 0.03);
+}
+
+/* Legacy image constraints (backward compatible) */
+img, .image-container {
+    max-width: 100%;
+    max-height: min(50vh, 400px);
+    object-fit: contain;
+}
+
+.slide-image {
+    max-width: 100%;
+    max-height: min(50vh, 400px);
+    object-fit: contain;
+    border-radius: 8px;
+}
+
+/* ===========================================
+   LAYOUT HELPERS
+   =========================================== */
+
+/* 12-column editorial grid */
+.column-grid {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    gap: clamp(1rem, 2vw, 2rem);
+    align-items: start;
+}
+
+.span-1  { grid-column: span 1; }
+.span-2  { grid-column: span 2; }
+.span-3  { grid-column: span 3; }
+.span-4  { grid-column: span 4; }
+.span-5  { grid-column: span 5; }
+.span-6  { grid-column: span 6; }
+.span-7  { grid-column: span 7; }
+.span-8  { grid-column: span 8; }
+.span-9  { grid-column: span 9; }
+.span-10 { grid-column: span 10; }
+.span-11 { grid-column: span 11; }
+.span-12 { grid-column: span 12; }
+
+/* Cards/containers */
 .card, .container, .content-box {
     max-width: min(90vw, 1000px);
     max-height: min(80vh, 700px);
 }
 
-/* 6. Lists auto-scale with viewport */
+/* Lists */
 .feature-list, .bullet-list {
     gap: clamp(0.4rem, 1vh, 1rem);
 }
@@ -71,23 +350,91 @@ html {
     line-height: 1.4;
 }
 
-/* 7. Grids adapt to available space */
+/* Grid */
 .grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(100%, 250px), 1fr));
     gap: clamp(0.5rem, 1.5vw, 1rem);
 }
 
-/* 8. Images constrained to viewport */
-img, .image-container {
-    max-width: 100%;
-    max-height: min(50vh, 400px);
-    object-fit: contain;
+/* Hairline divider */
+.hairline {
+    width: 100%;
+    height: 1px;
+    background: currentColor;
+    opacity: 0.25;
+    margin-top: var(--content-gap);
+    transform-origin: left;
+}
+
+/* ===========================================
+   HORIZONTAL DECK MODE
+   Optional: add data-deck="horizontal" to <html>
+   =========================================== */
+html[data-deck="horizontal"] {
+    scroll-snap-type: none;
+    overflow: hidden;
+}
+
+html[data-deck="horizontal"] body {
+    overflow: hidden;
+}
+
+html[data-deck="horizontal"] #deck {
+    position: fixed;
+    inset: 0;
+    display: flex;
+    flex-wrap: nowrap;
+    width: max-content;
+    height: 100vh;
+    transition: transform 0.9s cubic-bezier(0.77, 0, 0.175, 1);
+    z-index: 10;
+    will-change: transform;
+}
+
+html[data-deck="horizontal"] .slide {
+    width: 100vw;
+    height: 100vh;
+    flex: 0 0 100vw;
+    scroll-snap-align: none;
+}
+
+/* WebGL background canvases */
+.bg {
+    position: fixed;
+    inset: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 0;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.8s var(--ease-out-expo);
+}
+
+body.light-bg #bg-light,
+body.dark-bg #bg-dark {
+    opacity: 1;
+}
+
+/* Hero slides let WebGL/texture show through */
+.slide.hero {
+    background: transparent;
+}
+
+/* Low power mode */
+body.low-power .bg,
+body.low-power [data-anim] {
+    animation: none !important;
+}
+
+body.low-power [data-anim] {
+    opacity: 1 !important;
+    transform: none !important;
+    filter: none !important;
 }
 
 /* ===========================================
    RESPONSIVE BREAKPOINTS
-   Aggressive scaling for smaller viewports
    =========================================== */
 
 /* Short viewports (< 700px height) */
@@ -95,8 +442,8 @@ img, .image-container {
     :root {
         --slide-padding: clamp(0.75rem, 3vw, 2rem);
         --content-gap: clamp(0.4rem, 1.5vw, 1rem);
-        --title-size: clamp(1.25rem, 4.5vw, 2.5rem);
-        --h2-size: clamp(1rem, 3vw, 1.75rem);
+        --h-hero-size: clamp(2rem, 8vw, 5rem);
+        --h-xl-size: clamp(1.5rem, 5vw, 3rem);
     }
 }
 
@@ -105,11 +452,11 @@ img, .image-container {
     :root {
         --slide-padding: clamp(0.5rem, 2.5vw, 1.5rem);
         --content-gap: clamp(0.3rem, 1vw, 0.75rem);
-        --title-size: clamp(1.1rem, 4vw, 2rem);
+        --h-hero-size: clamp(1.5rem, 7vw, 4rem);
+        --h-xl-size: clamp(1.25rem, 4vw, 2.5rem);
         --body-size: clamp(0.7rem, 1.2vw, 0.95rem);
     }
 
-    /* Hide non-essential elements */
     .nav-dots, .keyboard-hint, .decorative {
         display: none;
     }
@@ -119,8 +466,8 @@ img, .image-container {
 @media (max-height: 500px) {
     :root {
         --slide-padding: clamp(0.4rem, 2vw, 1rem);
-        --title-size: clamp(1rem, 3.5vw, 1.5rem);
-        --h2-size: clamp(0.9rem, 2.5vw, 1.25rem);
+        --h-hero-size: clamp(1.25rem, 6vw, 3rem);
+        --h-xl-size: clamp(1rem, 4vw, 2rem);
         --body-size: clamp(0.65rem, 1vw, 0.85rem);
     }
 }
@@ -128,26 +475,49 @@ img, .image-container {
 /* Narrow viewports (< 600px width) */
 @media (max-width: 600px) {
     :root {
-        --title-size: clamp(1.25rem, 7vw, 2.5rem);
+        --h-hero-size: clamp(2rem, 12vw, 3.5rem);
     }
 
-    /* Stack grids vertically */
     .grid {
         grid-template-columns: 1fr;
+    }
+
+    .column-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .span-1, .span-2, .span-3, .span-4, .span-5,
+    .span-6, .span-7, .span-8, .span-9, .span-10,
+    .span-11, .span-12 {
+        grid-column: span 1;
     }
 }
 
 /* ===========================================
    REDUCED MOTION
-   Respect user preferences
    =========================================== */
 @media (prefers-reduced-motion: reduce) {
     *, *::before, *::after {
         animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
         transition-duration: 0.2s !important;
     }
 
     html {
         scroll-behavior: auto;
+    }
+
+    .reveal,
+    .reveal-scale,
+    .reveal-left,
+    .reveal-blur,
+    [data-anim] {
+        opacity: 1 !important;
+        transform: none !important;
+        filter: none !important;
+    }
+
+    .bg {
+        opacity: 0 !important;
     }
 }
